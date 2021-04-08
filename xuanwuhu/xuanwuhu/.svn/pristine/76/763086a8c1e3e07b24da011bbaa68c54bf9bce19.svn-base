@@ -1,0 +1,538 @@
+.mui-bar-nav{
+	background-color: #4690fb;
+}
+.mui-bar-nav~.mui-content{
+	padding-top: 0;
+}
+.baseinfowrap{
+	padding: 1rem .2rem .5rem;
+	background: -moz-linear-gradient(top, #4690fb, #665eff);
+	background: -webkit-linear-gradient(top, #4690fb, #665eff);
+	background: -o-linear-gradient(top, #4690fb, #665eff);
+}
+.baseinfo{
+	padding-bottom: .15rem;
+}
+.userinfo{
+	text-align: center;
+	padding: .2rem 0 .1rem;
+}
+.userinfo img{
+	width: 1.8rem;
+	height: 1.8rem;
+	border-radius: 50%;
+	background-color: #FFFFFF;
+	padding: .06rem;
+	display: inline-block;
+}
+.userinfo p{
+	line-height: .7rem;
+	color: #FFFFFF;
+	font-size: .35rem;
+}
+
+.people .mui-table-view.mui-grid-view .mui-table-view-cell{
+	border-top: 0;
+}
+
+.tip{
+	padding: .56rem .3rem .2rem .3rem;
+	background-color: #4d50c5;
+	line-height: .48rem;
+	font-size: .24rem;
+	color: #bac4c5;
+	position: relative;
+	margin-bottom: .25rem;
+}
+.tip img.close{
+	width: .6rem;
+	height: .6rem;
+	padding: .2rem;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.model{
+	padding: 0 .25rem .25rem;
+	margin-bottom: .25rem;
+}
+.model ul{
+	width: 6.6rem;
+	overflow: hidden;
+}
+.model ul li{
+	width: 2.2rem;
+	float: left;
+	height: 1.5rem;
+	list-style: none;
+	text-align: center;
+}
+.model ul li h4{
+	line-height: .94rem;
+	padding-top: .16rem;
+	font-size: .22rem;
+	color: #ff3e3f;
+}
+.model ul li h4 span{
+	font-size: .4rem;
+	color: #ff3e3f;
+}
+.model ul li p{
+	line-height: .4rem;
+	font-size: .28rem;
+	color: #333;
+}
+
+.special .mui-table-view.mui-grid-view .mui-table-view-cell {
+    padding: .22rem 0;
+	padding-left: .3rem;
+    height: 1.2rem;
+}
+.info h4 span{
+	font-size: .28rem;
+}
+.people h4{
+	font-size: .28rem;
+}
+
+.housenum h4{
+	line-height: 1.4rem;
+	color: #fa4149;
+	font-size: .28rem;
+	text-align: center;
+}
+.housenum h4 span{
+	color: #fa4149;
+	font-size: .52rem;
+}
+
+.intron{
+	padding: .55rem .15rem .15rem;
+	background-color: #feeeee;
+	line-height: .48rem;
+	font-size: .28rem;
+	margin: 0 .3rem .3rem;
+	position: relative;
+	border-radius: .1rem;
+	border: 1px solid #f1ebeb;
+	clear: both;
+}
+.intron span{
+	height: .4rem;
+	line-height: .4rem;
+	width: .8rem;
+	color: #FFFFFF;
+	background-color: #ff3581;
+	display: block;
+	font-size: .25rem;
+	position: absolute;
+	top: 0;
+	left: 0;
+	border-radius: .1rem 0 .1rem 0;
+	text-align: center;
+}
+
+.peohouse p.deco{
+	line-height: .6rem;
+	font-size: .28rem;
+	color: #555;
+	padding: .2rem .4rem 0;
+}
+
+.echartinfo{
+	overflow: hidden;
+	background-color: #FFFFFF;
+}
+.echartinfo h4.title{
+	line-height: .8rem;
+	height: .8rem;
+	padding: 0 .55rem;
+	background-color: #f9f8fe;
+}
+.echartinfo h4 img{
+	display: inline-block;
+	height: .3rem;
+	margin-top: .25rem;
+	vertical-align: top;
+	margin-right: .1rem;
+}
+.echartinfo h4 span{
+	font-size: .35rem;
+	font-weight: 600;
+	color: #09090b;
+}
+
+.process .mui-progressbar{
+	height: .15rem;
+	border-radius: .08rem;
+}
+.process .mui-progressbar span{
+	background: -moz-linear-gradient(left, #179efa, #ff3b49);
+	background: -webkit-linear-gradient(left, #179efa, #ff3b49);
+	background: -o-linear-gradient(left, #179efa, #ff3b49);
+	border-radius: .08rem;
+}
+.process{
+	padding: .9rem .45rem .45rem;
+}
+#process{
+	height: .15rem;
+	position: relative;
+}
+#process p{
+	position: absolute;
+	right: 0;
+	bottom: .3rem;
+	font-size: .2rem;
+	color: #FFFFFF;
+	background-color: #ff3b49;
+	width: .74rem;
+	height: .4rem;
+	line-height: .4rem;
+	text-align: center;
+	border-radius: .1rem;
+	display: none;
+}
+#process p a{
+	display: block;
+	position: relative;
+	width: .74rem;
+	height: .4rem;
+}
+#process p a i{
+	position: absolute;
+	border-top: 8px solid #ff3b49;
+	left: 50%;
+	margin-left: -4px;
+	top: -2px;
+}
+#process i{
+	font-size: .16rem;
+	position: absolute;
+	top: 0;
+	line-height: .15rem;
+	font-style: normal;
+}
+#process i.start{
+	left: -.25rem;
+}
+#process i.end{
+	right: -.35rem;
+}
+.process .tabs{
+	padding: .4rem 0 .35rem;
+}
+.process .tabs i{
+	display: inline-block;
+	font-style: normal;
+	padding: 0 .15rem;
+	border-radius: .1rem;
+	border: 1px solid #ff3c44;
+	font-size: .24rem;
+	color: #FF3C44;
+	margin-right: .12rem;
+}
+.echartinfo .intron{
+	margin: 0;
+}
+
+.risk{
+	padding: 0 .45rem .45rem;
+}
+.bank{
+	padding: .25rem .45rem .45rem;
+}
+.family{
+	padding: .2rem .45rem .45rem;
+}
+.family h4{
+	line-height: .9rem;
+	font-size: .32rem;
+	color: #222;
+}
+.family h4 span{
+	font-size: .32rem;
+	color: #a9a9a9;
+}
+.family h4 span i{
+	font-style: normal;
+	font-size: .43rem;
+	color: #f0404b;
+	margin-right: .05rem;
+}
+
+.history{
+	padding: .2rem .45rem .45rem;
+}
+
+.history li{
+	list-style: none;
+	height: 1.2rem;
+	padding: .35rem 0 .35rem .3rem;
+	position: relative;
+	overflow: visible !important;
+}
+.history li .mui-media-object {
+    line-height: .5rem;
+    max-width: .5rem;
+	width: .5rem;
+    height: .5rem;
+	border-radius: 50%;
+	background-color: #0062CC;
+	color: #FFFFFF;
+	text-align: center;
+	font-size: .24rem;
+	position: relative;
+	z-index: 8;
+}
+.history li .mui-media-body {
+    line-height: .5rem;
+	font-size: .35rem;
+	font-weight: 500;
+}
+.history li::after{
+	height: 0;
+}
+
+.history li i.line{
+	display: block;
+	width: 1.5px;
+	height: 1.2rem;
+	background-color: #E9E9E9;
+	position: absolute;
+	left: .54rem;
+	top: -.55rem;
+	z-index: 7;
+}
+.history li:first-child i.line{
+	display: none;
+}
+
+.houseinfo{
+	padding: 0 .55rem .3rem;
+}
+.houseinfo .mui-table-view.mui-grid-view .mui-table-view-cell {
+    padding: .22rem 0;
+	padding-left: .3rem;
+    height: 1.2rem;
+}
+.houseinfo h4 span{
+	color: #ff364a;
+}
+.houseinfo .mui-table-view.mui-grid-view .mui-table-view-cell:nth-child(2){
+	border: 0;
+}
+.riskbase .mui-table-view.mui-grid-view .mui-table-view-cell:nth-child(2){
+	border: 0;
+}
+.riskbase .echartinfo{
+	padding-bottom: .2rem;
+}
+
+.info p i{
+	font-size: .16rem;
+	color: #898989;
+	width: .3rem;
+	height: .3rem;
+	line-height: .3rem; 
+	text-align: center;
+	font-style: normal;
+	border-radius: 50%;
+	border: .02rem solid #898989;
+	display: inline-block;
+	margin-right: .1rem;
+	vertical-align: top;
+}
+
+.houseinfo .titcon .mui-table-view-cell{
+	height: 1.3rem;
+	list-style: none;
+	padding: .15rem 0 .1rem .08rem;
+}
+.houseinfo .titcon .mui-table-view-cell .mui-media-object{
+	max-width: .45rem;
+	height: .45rem;
+}
+.houseinfo .titcon .mui-table-view-cell .mui-media-body{
+	line-height: .5rem;
+	font-size: .34rem;
+}
+.houseinfo .titcon .mui-table-view-cell .mui-media-body p{
+	line-height: .6rem;
+	font-size: .3rem;
+	color: #555555;
+}
+
+.know{
+	padding: .2rem .45rem .35rem;
+}
+.know .mapwrap{
+	overflow: hidden;
+}
+.know .map{
+	height: 2rem;
+}
+.know .mapcont a{
+	display: inline-block;
+	padding: .08rem .4rem;
+	text-align: center;
+	color: #FFFFFF;
+	font-size: .28rem;
+	border-radius: .1rem;
+}
+.know .maplist{
+	padding: .2rem 0 .25rem;
+	
+}
+.know .maplist li{
+	list-style: none;
+	height: .56rem;
+	line-height: .56rem;
+}
+.know .mapcont a.greenbg{
+	background-color: #00d382;
+}
+.green{
+	color: #00D382;
+}
+.know .mapcont a.orangebg{
+	background-color: #ff7e00;
+}
+.orange{
+	color: #ff7e00;
+}
+.know .mapcont a.bluebg{
+	background-color: #6f88ff;
+} 
+.blue{
+	color: #6f88ff;
+}
+.know .mapcont a.redbg{
+	background-color: #ff5438;
+} 
+.red{
+	color: #ff5438; 
+}
+.know .mapcont a.otherbg{
+	background-color: #8f76d2;
+}
+.other{
+	color: #8f76d2; 
+}
+
+.know .maplist li p{
+	width: 5.6rem;
+	font-size: .3rem;
+	color: #323232;
+}
+.know .maplist li span{
+	width: 1rem;
+	font-size: .26rem;
+	text-align: right;
+	color: inherit;
+}
+
+
+.know p.remark{
+	line-height: .6rem;
+	font-size: .24rem;
+	padding-bottom: .3rem;
+	color: #898989;
+}
+
+.housetrend{
+	padding: .2rem .45rem .4rem;
+}
+
+.forminfo{
+	padding: 0 .45rem .5rem;
+}
+/* #formmain{
+	position: relative;
+	z-index: 98;
+}
+#num{
+	position: absolute;
+	line-height: .6rem;
+	font-size: .36rem;
+	color: #FF364A;
+	font-weight: 500;
+	top: 50%;
+	z-index: 99; 
+} */
+
+
+.procent{
+	font-size: .28rem;
+	padding: .1rem .5rem;
+	overflow: hidden;
+}
+.procent .detail{
+	width: 6.5rem;
+	color: #666666;
+	font-size: .28rem;
+}
+.procent .detail h4{
+	margin: 0 0 .05rem;
+	font-size: .29rem;
+	color: #333;
+}
+.procent .detail p{
+	font-size: .24rem;
+	color: #999999; 
+	margin: 0;
+}
+.procent .detail .process{
+	height: 1.2rem;
+	padding: .3rem 0 0 0;
+}
+.procent .detail .process .mui-media-object{
+	max-width: .7rem;
+	width: .7rem;
+	height: .7rem;
+	position: relative;
+	text-align: center;
+}
+.procent .detail .process .mui-media-object i{
+	width: .5rem;
+	height: .5rem;
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: inline-block;
+	border-radius: 50%;
+	color: #FFFFFF;
+	font-style: normal;
+	font-size: .25rem;
+	line-height: .5rem;
+	z-index: 9;
+}
+.procent.blue .detail .process .mui-media-object i{
+	background: #2d76ff;
+}
+.procent.green .detail .process .mui-media-object i{
+	background: #4bcb9a;
+}
+.procent.other .detail .process .mui-media-object i{
+	background: #6b6aec;
+}
+.procent.orange .detail .process .mui-media-object i{
+	background: #ff7e00;
+}
+.procent .detail .process .mui-media-object .line{
+	width: .01rem;
+	height: 1.35rem;
+	position: absolute;
+	top: -1rem;
+	left: .25rem;
+	border-left: .02rem solid #eeeeee;
+	display: inline-block;
+	z-index: 8;
+}
+.procent .detail .process:first-child .mui-media-object .line{
+	display: none;
+}
+.procent .detail .process .mui-media-body{
+	margin-left: .7rem;
+}

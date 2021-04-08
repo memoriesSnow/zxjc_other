@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>房屋征信</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/common.css" rel="stylesheet" />
+		<link href="css/index.css" rel="stylesheet" />
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-3.4.1.min.js"></script>
+		<script src="js/common.js"></script> 
+		<script src="js/user.js"></script> 
+	</head>
+	<body>
+		<div class="mui-content"> 
+			<ul class="numlist" id="numlist">
+				<li>0</li><li>0</li><li>0</li><li>0</li><li>0</li><li>0</li><li>0</li><li>1</li>
+			</ul>
+			
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-media">
+					<img class="mui-media-object mui-pull-left" src="images/message.png">
+					<div class="mui-media-body">
+						<ul id="notice"></ul>
+					</div>
+				</li>
+			</ul>
+			<div class="model" id="allsearch">
+				<p style="font-size: .28rem;margin-top: .1rem;color: #777;">本平台查询默认以账户余额第一优先扣费</p>
+				<h4>查询工具</h4>
+				<div class="modellist">
+					<img data-href="pages/searchhouse.html" class="fl leftimg" src="images/searchface.png" >
+					<img data-href="pages/searchloan.html" class="fr leftimg" src="images/loan.png" >
+					<!-- <div class="fr rightcon">
+						<img data-href="pages/searchloan.html" src="images/risk.png" >
+						<img data-href="pages/searchvehicle.html" src="images/car.png" >
+					</div> -->
+				</div>
+			</div>
+			<div class="model" id="allmodel">
+				<h4>个人中心</h4>
+				<ul class="threemodel">
+					<li>
+						<a href="pages/baseinfo.html">
+							<img src="images/people.png" />
+							<p>基本信息</p>
+						</a>
+					</li>
+					<li>
+						<a href="pages/searchlist.html">
+							<img src="images/book.png" />
+							<p>查询记录</p>
+						</a>
+					</li>
+					<li>
+						<a href="pages/message.html">
+							<img src="images/deng.png" />
+							<p>我的消息</p>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		mui.init();
+		var state = app.getState();
+		var status = state.status ? state.status: 0;
+		var userid = state.userid ? state.userid: 0;
+		var token = state.token ? state.token: 0;
+		var realName = state.realName ? state.realName:"";
+		var companyname = state.companyname ? state.companyname:"";
+		// console.log(JSON.stringify(state));
+		mui.plusReady(function () {
+			if(status==0) {
+				mui.openWindow({
+					url: "login.html",
+					id: "login"
+				});
+			};
+			
+			searchpeople();
+			setInterval("searchpeople()", 500000);
+			// setInterval("lunbo('ul#notice','-.5rem')", 3000); 
+			mui("#allmodel").on("tap", "a", function(e) {
+				e.preventDefault();
+				var url = $(this).attr("href");
+				if(status==0) {
+					mui.openWindow({
+						url: "login.html",
+						id: "login"
+					});
+				}else{
+					var id = url.replace("pages/","").replace(".html","");
+					// alert(id);
+					mui.openWindow({
+						url: url,
+						id: id,
+						extras: {}
+					}); 
+				}
+				
+			});
+			
+			mui("#allsearch").on("tap", "img", function(e) {
+				e.preventDefault();
+				var url = $(this).attr("data-href");
+				if(status==0) {
+					mui.openWindow({
+						url: "login.html",
+						id: "login"
+					});
+				}else{
+					if(companyname=="" || realName==""){
+						mui.toast("请先完善个人基本信息");
+					}else{
+						var id = url.replace("pages/","").replace(".html","");
+						mui.openWindow({
+							url: url,
+							id: id,
+							extras: {}
+						}); 
+					}
+				}
+			}); 
+		    
+			// 最新通知
+			mui.ajax(serverUrl + 'FeedBack/Reply', {
+				data: {
+					id: userid, 
+					token: token,
+					pageindex: 1,
+					pagesize: 3
+				},
+				async: true,
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒
+				success: function(data) {
+					// console.log(JSON.stringify(data));
+					if (data.status == 1) {
+						mui.toast(data.info);
+						var datas = data.data;
+						var html = "";
+						
+						for (var i = 0; i < datas.length; i++) {
+							html += '<li id="'+ datas[i].id +'">' + datas[i].text + '</li>';
+						}
+						document.getElementById("notice").innerHTML = html;
+						
+						setInterval("lunbo('ul#notice','-.5rem')", 3000); 
+					}else{
+						mui.toast(data.info); 
+						mui.openWindow('login.html','login',{});
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					mui.toast("亲，您的网络环境不稳定，请稍后再试！");
+				}
+			});
+			
+			mui("#notice").on("tap","li",function(e){
+				e.preventDefault();
+				var listid = $(this).attr("id");
+				mui.openWindow({
+					url: "pages/msgdetail.html",
+					id: "msgdetail",
+					extras: {
+						listid: listid,
+						token: token
+					}
+				}); 
+			});
+			
+		});
+		
+		// 公示公告上下轮播
+		function lunbo(id, height) {
+			var ul = $(id);
+			var liFirst = ul.find('li:first');
+			$(id).animate({
+				top: height
+			}).animate({
+				"top": 0
+			}, 0, function() {
+				var clone = liFirst.clone();
+				$(id).append(clone);
+				liFirst.remove();
+			})
+		};
+		
+		// 查询报告人数
+		function searchpeople(){
+			mui.ajax(serverUrl + 'mycenter/GetPerCount', {
+				data: {},
+				async: true,
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒
+				success: function(data) {
+					// console.log(JSON.stringify(data));
+					if (data.status == 1) {
+						document.getElementById("numlist").innerHTML = "";
+						mui.toast(data.info);
+						var datas = data.data;
+						for(var i=0;i<datas.length;i++){
+							document.getElementById("numlist").innerHTML += '<li>'+datas[i]+'</li>';
+						} 
+					}else{
+						mui.toast(data.info);
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					mui.toast("亲，您的网络环境不稳定，请稍后再试！");
+				}
+			}); 
+		};
+		
+	</script>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>基本信息</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		<link href="../css/base.css" rel="stylesheet" />
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/jquery-3.4.1.min.js"></script>
+		<script src="../js/common.js"></script>
+		<script src="../js/user.js"></script>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">更改<span class="title">公司名称</span></h1>
+			<a class="morebtn mui-pull-right" id="sure">保存</a>
+		</header>
+		<div class="mui-content edit">
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<input id="cont" type="text" class="mui-input-clear" value="公司名称">
+				</div>
+				<div class="mui-input-row codemodel" id="codemodel">
+					<input id="code" type="number" placeholder="请输入验证码">
+					<a class="getcode" id="getValid">获取验证码</a>
+				</div>
+				<p>准确的<span class="title">公司名称</span>可以让你的客户更信赖你</p>
+			</form>
+		</div>
+	</body>
+	<script type="text/javascript">
+		mui.init();
+		var title = "", cont = "", value = "", Code = "";
+		var state = app.getState();
+		// alert(JSON.stringify(state));
+		var userid = state.userid ? state.userid: 0;
+		var token = state.token ? state.token: 0;
+		// console.log(token);
+		mui.plusReady(function() {
+			var self = plus.webview.currentWebview();
+			title = self.title;
+			cont = self.cont;
+			
+			$(".title").text(title);
+			if(cont=="公司名称" || cont=="真实姓名"){
+				$("#cont").val("");
+			}else{
+				$("#cont").val(cont);
+			}
+			$("#cont").attr("placeholder", "请输入"+title);
+			
+			if(title=="手机号"){
+				document.getElementById("codemodel").style.display = "block";
+			}
+			
+			document.getElementById("sure").addEventListener("tap",function(){
+				value = document.getElementById("cont").value;
+				if(value==cont){
+					if(title=="手机号"){
+						if(value==cont){
+							mui.toast("不能与原手机号码相同！");
+						}else{
+							Code = document.getElementById('code').value;
+							if(!Code){
+								mui.toast("验证码不能为空！");
+							}else{
+								phoneedit(value, Code);
+							}
+						}
+						
+					}else{
+						mui.back();
+					}
+					
+				}else if(!value){
+					mui.toast(title+"不能为空！");
+				}else{
+					console.log(value);
+					if(title=="公司名称"){
+						mui.ajax(serverUrl+'Mycenter/UpdateCompanyName', {
+							data: {
+								id: userid,
+								NewCompanyName: value,
+								Token: token
+							},
+							dataType: 'json', //服务器返回json格式数据
+							type: 'post', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(data) {
+								// console.log(JSON.stringify(data));
+								if(data.status == 1) {
+									mui.toast(data.info);
+									state.companyname = data.Company;
+									app.setState(state); 
+									plus.webview.currentWebview().opener().reload();
+									plus.webview.getLaunchWebview().reload();
+									mui.back();
+								} else if(data.status == 0) {
+									mui.toast(data.info);
+									mui.openWindow('../login.html','login',{});
+								} else {
+									mui.toast(data.info);
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								mui.toast("亲，您的网络环境不稳定，请稍后再试！");
+							}
+						});
+						
+					}else if(title=="手机号"){
+						
+						Code = document.getElementById('code').value;
+						if(!Code){
+							mui.toast("验证码不能为空！");
+						} else{
+							phoneedit(value, Code);
+						}
+						
+					}else{
+						mui.ajax(serverUrl+'Mycenter/UpdateName', {
+							data: {
+								id: userid,
+								NewName: value,
+								Token: token
+							},
+							dataType: 'json', //服务器返回json格式数据
+							type: 'post', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(data) {
+								// console.log(JSON.stringify(data));
+								if(data.status == 1) {
+									mui.toast(data.info);
+									state.realName = data.RealName;
+									app.setState(state); 
+									plus.webview.currentWebview().opener().reload();
+									plus.webview.getLaunchWebview().reload();
+									mui.back();
+								} else if(data.status == 0) {
+									mui.toast(data.info);
+									mui.openWindow('../login.html','login',{});
+								} else {
+									mui.toast(data.info);
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								mui.toast("亲，您的网络环境不稳定，请稍后再试！");
+							}
+						});
+						
+					}
+				}
+			});
+			
+			
+			document.getElementById("getValid").addEventListener("tap", function(){
+				var _this = this;
+				var phone = document.getElementById("cont").value;
+				if(phone==cont){
+					mui.toast("不能与原手机号码相同！");
+				} else {
+					if(!checkMobile(phone)) {
+						mui.toast("请输入有效的手机号");
+						return;
+					}
+					// 发送短信
+					app.sendSMS(this, phone, function(err){
+						if(err) {
+							mui.toast(err);
+							return;
+						}
+					});
+				}
+			});
+			
+		});
+		
+		//修改手机号
+		function phoneedit(value, Code){
+			mui.ajax(serverUrl+'Mycenter/UpdatePhoneNumber', {
+				data: {
+					id: userid,
+					phonenumber: value,
+					code: Code,
+					Token: token
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					// console.log(JSON.stringify(data));
+					if(data.status == 1) {
+						mui.toast(data.info);
+						// state.phone = data.Phone;
+						// app.setState(state); 
+						localStorage.setItem('$state', "");
+						plus.webview.getLaunchWebview().show();
+						plus.webview.getLaunchWebview().reload();
+					} else {
+						mui.toast(data.info);
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					mui.toast("亲，您的网络环境不稳定，请稍后再试！");
+				}
+			});
+		};
+	</script>
+</html>

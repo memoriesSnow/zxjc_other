@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link href="./assets/images/peo.png" rel="icon">
+		<title>风险管理服务平台</title>
+		<link rel="stylesheet" href="../../assets/libs/layui/css/layui.css" />
+		<link rel="stylesheet" href="../../assets/module/admin.css?v=313" />
+		<link rel="stylesheet" type="text/css" href="../../assets/css/smzq_xq.css"/>
+		<script src="../../assets/libs/jquery/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../assets/js/html2pdf.bundle.js" type="text/javascript" charset="utf-8"></script>
+		<!--地图-->
+		<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=23759963d9dc1a56fc2acc6ce6adff24"></script>
+	</head>
+<style type="text/css">
+	.heads {
+		background: url(../../assets/images/smzq_1.jpg) no-repeat left;
+		background-size: cover;
+		color: #fff;
+		font-size: 22px;
+		padding: 15px 30px;
+		border-radius: 8px;
+		overflow: hidden;
+	}
+	.heads span{
+		margin-left: 15px;
+		font-size: 16px;
+	}
+	.head_left{
+		margin-top: 15px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		font-size: 18px;
+	}
+	#shuiyin{
+		position: absolute;
+		width: calc(100% - 50px);
+		height: calc(100% - 50px);
+		overflow: hidden;
+	}
+	.wat{
+		width:100%;
+		z-index: 1000;
+		font-family: "微软雅黑";
+		color: rgba(0,0,0,0.1);
+		font-size: 50px;
+		margin: 0 auto;
+	}
+	.watword{
+		line-height: 50px;
+		text-align: center;
+		white-space: nowrap;
+		transform: rotate(-40deg);
+	}
+</style>
+	<body>
+		<!-- 页面加载loading -->
+		<div class="page-loading">
+			<div class="ball-loader">
+				<span></span><span></span><span></span><span></span>
+			</div>
+		</div>
+		<!-- 正文开始 -->
+		<div class="layui-fluid">
+			<div class="layui-card">
+				<div class="layui-card-body table-tool-mini" id="particulars" style="padding: 25px; position: relative;">
+					<div id="shuiyin"></div>
+					<div class="heads">
+							<div id="address">
+								
+							</div>
+							<div class="head_left">
+								<div>查询编号<span id="Searchcode"></span></div>
+								<div>查询时间<span id="Searchtime"></span></div>
+								<div></div>
+							</div>
+						
+					</div>
+					<div class="yuan">
+						<div></div>报告详情</div>
+						
+					
+					<table border="" cellspacing="" cellpadding="">
+						<tr>
+							<td rowspan="7" class="cen title">基本信息</td>
+							<td class="cen">
+								土地性质
+							</td>
+							<td colspan="2">
+								<span class="cens" id="Landnature"></span>
+							</td>
+							<td class="cen">
+								土地用途
+							</td>
+							<td colspan="5">
+								<span class="cens" id="Landuse"></span>
+							</td>
+							<!--<td class="cen">
+								土地是否抵押
+							</td>
+							<td colspan="2">
+								<span class="cens" id=""></span>
+							</td>-->
+						</tr>
+						<tr>
+							<td class="cen">
+								房产所属小区
+							</td>
+							<td colspan="8">
+								<span class="cens" id="Ownname"></span>
+							</td>
+						</tr>
+						<tr>
+							<td class="cen">
+								详细地址
+							</td>
+							<td colspan="8">
+								<span class="cens" id="Address"></span>
+							</td>
+						</tr>
+						<tr>
+							<td class="cen">
+								房屋性质
+							</td>
+							<td colspan="2">
+								<span class="cens" id="Housenature"></span>
+							</td>
+							<td class="cen">
+								房屋用途
+							</td>
+							<td colspan="2">
+								<span class="cens" id="Houseuse"></span>
+							</td>
+							<td class="cen">
+								建筑面积
+							</td>
+							<td colspan="2">
+								<span class="cens" id="Buildarea"></span>
+							</td>
+						</tr>
+						<tr>
+							<td class="cen">
+								建筑年代
+							</td>
+							<td colspan="3">
+								<span class="cens" id="Buildyear"></span>
+							</td>
+							<td class="cen">
+								房屋价格
+							</td>
+							<td colspan="4">
+								<span class="cens" id="Price"></span>
+							</td>
+						</tr>
+						<tr>
+							<td class="cen">
+								开发企业
+							</td>
+							<td colspan="3">
+								<span class="cens" id="Developer"></span>
+							</td>
+							<td class="cen">
+								物业公司
+							</td>
+							<td colspan="4">
+								<span class="cens" id="Propertycompany"></span>
+							</td>
+							
+						</tr>
+						<tr>
+							<td class="cen">
+								房产证办理进度
+							</td>
+							<td colspan="3">
+								<span class="cens" id="Propertystatus"></span>
+							</td>
+							<td class="cen">
+								房产是否抵押
+							</td>
+							<td colspan="1">
+								<span class="cens" id="Ispledge"></span>
+							</td>
+							<td class="cen">
+								房产是否查封
+							</td>
+							<td colspan="2">
+								<span class="cens" id="Islimit"></span>
+							</td>
+						</tr>
+						<tr>
+							<td rowspan="8" class="cen title">证件信息</td>
+							<td rowspan="2" class="cen">
+								预售证
+							</td>
+							<td colspan="3" class="cen">
+								预售许可证
+							</td>
+							<td colspan="4" class="cen">
+								项目名称			
+							</td>
+							<td colspan="1" class="cen">
+								竣工日期			
+							</td>
+						</tr>
+						<tr class="zj" id="yushou">
+							<td colspan="3">
+								<span class="cens">
+									<ul class="Cardcode">
+										
+									</ul>
+								</span>
+							</td>
+							<td colspan="4">
+								<span class="cens">
+									<ul class="Name">
+										
+									</ul>
+								</span>
+							</td>
+							<td colspan="1">
+								<span class="cens">
+									<ul class="Finish">
+										
+									</ul>
+								</span>
+							</td>
+						</tr>
+						<tr>
+							<td rowspan="2" class="cen">
+								土地证
+							</td>
+							<td colspan="3" class="cen">
+								土地许可证
+							</td>
+							<td colspan="5" class="cen">
+								项目名称			
+							</td>
+						</tr>
+						<tr class="zj" id="tudi">
+							<td colspan="3">
+								<span class="cens">
+									<ul class="Cardcode"></ul>
+								</span>
+							</td>
+							<td colspan="5">
+								<span class="cens">
+									<ul class="Name"></ul>
+								</span>
+							</td>
+						</tr>
+						<tr>
+							<td rowspan="2" class="cen">
+								施工证
+							</td>
+							<td colspan="3" class="cen">
+								施工许可证
+							</td>
+							<td colspan="5" class="cen">
+								项目名称			
+							</td>
+						</tr>
+						<tr class="zj" id="shigong">
+							<td colspan="3">
+								<span class="cens">
+									<ul class="Cardcode"></ul>
+								</span>
+							</td>
+							<td colspan="5">
+								<span class="cens">
+									<ul class="Name"></ul>
+								</span>
+							</td>
+						</tr>
+						<tr>
+							<td rowspan="2" class="cen">
+								规划证
+							</td>
+							<td colspan="3" class="cen">
+								规划许可证
+							</td>
+							<td colspan="5" class="cen">
+								项目名称			
+							</td>
+						</tr>
+						<tr class="zj" id="guihua">
+							<td colspan="3">
+								<span class="cens">
+									<ul class="Cardcode"></ul>
+								</span>
+							</td>
+							<td colspan="5">
+								<span class="cens">
+									<ul class="Name"></ul>
+								</span>
+							</td>
+						</tr>
+						<tr class="maps">
+							<td rowspan="5" class="cen title">
+								周边配套
+							</td>
+							<td class="cen mapmodel">
+								学校
+							</td>
+							<td colspan="8">
+								<ul class="zbpt" id='school'></ul>
+							</td>
+						</tr>
+						<tr class="maps">
+							<td class="cen mapmodel">
+								银行
+							</td>
+							<td colspan="8">
+								<ul class="zbpt" id='banking'></ul>
+							</td>
+						</tr>
+						<tr class="maps">
+							<td class="cen mapmodel">
+								医院
+							</td>
+							<td colspan="8">
+								<ul class="zbpt" id="hospital"></ul>
+							</td>
+						</tr>
+						<tr class="maps">
+							<td class="cen mapmodel">
+								超市
+							</td>
+							<td colspan="8">
+								<ul class="zbpt" id="supermarket"></ul>
+							</td>
+						</tr>
+						<tr class="maps">
+							<td class="cen mapmodel">
+								商场
+							</td>
+							<td colspan="8">
+								<ul class="zbpt" id="mall"></ul>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<!--<button type="button" onclick="xiazai()" class="xiaz">下载</button>-->
+		<!-- js部分 -->
+		<script type="text/javascript" src="../../assets/libs/layui/layui.js"></script>
+		<script type="text/javascript" src="../../assets/js/common.js?v=313"></script>
+		<script type="text/javascript">
+			var searchcode = decodeURI(Request.searchcode);//查询编号
+			var Userid = decodeURI(Request.Userid);//查询编号
+			var address = decodeURI(Request.Address);//房屋坐落
+			var searchuser = decodeURI(Request.Searchuser);//查询人
+			var searchtime = decodeURI(Request.Searchtime);//查询时间
+			$("#address").html(address)
+			layui.use(['layer', 'form', 'table', 'util', 'admin'], function() {
+				var $ = layui.jquery;
+				var layer = layui.layer;
+				var form = layui.form;
+				var table = layui.table;
+				var util = layui.util;
+				var admin = layui.admin;
+				
+				$.ajax({
+					type:"post",
+					url:ip + 'record',
+					data:{
+						id:Request.id,
+						username: phone
+					},
+					success:function(res){
+						console.log(res)
+						if(res.status == 1){
+							var data = res.data.card;
+							var data2 = res.data.basic;
+							if(data2.Coordinate!=""){
+								// 地图配套解析
+								var len = $(".maps");
+								for(var i = 0; i < len.length; i++) {
+									keyword = len.eq(i).find(".mapmodel").text();
+									ul = len.eq(i).find(".zbpt").attr("id");
+									searchAround(keyword, 1, data2.Coordinate, ul);
+								};
+							}
+							for(var i in data2){
+								if(data2[i]==""){
+//									$("#"+i).html("暂无数据");
+								}else{
+									$("#"+i).html(data2[i]);
+								}
+								if(i == "Searchtime"){
+									if(data2[i] != ""){
+										var time = data2[i]
+										var time1 = time.replace('T',' ')
+										var time2 = time1.replace('Z','')
+										var time3 = time2.split('.')[0]
+										$("#Searchtime").html(time3)
+									}
+								}
+								if(i == "Buildyear"){
+									if(data2[i] != ''){
+										$("#Buildyear").html(data2[i]+"年");
+									}else{
+										$("#Buildyear").html('')
+									}
+								}
+								if(i == "Price"){
+									if(data2[i] != ''){
+										$("#Price").html(data2[i]+"元/㎡");
+									}else{
+										$("#Price").html('')
+									}
+								}
+								if(i == "Buildarea"){
+									if(data2[i] != ''){
+										$("#Buildarea").html(data2[i]+"㎡");
+									}else{
+										$("#Buildarea").html('')
+									}
+								}
+								if(i == "Ispledge"){
+									if(data2[i] == 1){
+										$("#Ispledge").html("是");
+									}else{
+										$("#Ispledge").html("否");
+									}
+								}
+								if(i == "Islimit"){
+									if(data2[i] == 1){
+										$("#Islimit").html("是");
+									}else{
+										$("#Islimit").html("否");
+									}
+								}
+							}
+							var ys = [],
+								tu = [],
+								sg = [],
+								gh = [];
+							var Cardcode = Name = Finish =''
+							var tu_Cardcode = tu_Name = tu_Finish =''
+							var sg_Cardcode = sg_Name = sg_Finish =''
+							var gh_Cardcode = gh_Name = gh_Finish =''
+							for(var i=0; i<data.length; i++){
+								var type = data[i].Type
+								if(type == "预售证"){
+									ys.push(data[i])
+								}else if(type == "土地证"){
+									tu.push(data[i])
+								}else if(type == "施工证"){
+									sg.push(data[i])
+								}else if(type == "规划证"){
+									gh.push(data[i])
+								}
+							}
+							if(ys){
+								for(var a=0; a<ys.length; a++){
+									Cardcode +='<li class="li_zheng">'+ys[a].Cardcode+'</li>'
+									Name +='<li class="li_zheng">'+ys[a].Name+'</li>'
+									Finish +='<li class="li_zheng">'+ys[a].Finish+'</li>'
+								}
+								$("#yushou .Cardcode").html(Cardcode)
+								$("#yushou .Name").html(Name)
+								$("#yushou .Finish").html(Finish)
+							}
+							if(tu){
+								for(var b=0; b<tu.length; b++){
+									tu_Cardcode +='<li class="li_zheng">'+tu[b].Cardcode+'</li>'
+									tu_Name +='<li class="li_zheng">'+tu[b].Name+'</li>'
+									tu_Finish +='<li class="li_zheng">'+tu[b].Finish+'</li>'
+								}
+								$("#tudi .Cardcode").html(tu_Cardcode)
+								$("#tudi .Name").html(tu_Name)
+								$("#tudi .Finish").html(tu_Finish)
+							}
+							if(sg){
+								for(var c=0; c<sg.length; c++){
+									sg_Cardcode +='<li class="li_zheng">'+sg[c].Cardcode+'</li>'
+									sg_Name +='<li class="li_zheng">'+sg[c].Name+'</li>'
+									sg_Finish +='<li class="li_zheng">'+sg[c].Finish+'</li>'
+								}
+								$("#shigong .Cardcode").html(sg_Cardcode)
+								$("#shigong .Name").html(sg_Name)
+								$("#shigong .Finish").html(sg_Finish)
+							}
+							if(gh){
+								for(var d=0; d<gh.length; d++){
+									gh_Cardcode +='<li class="li_zheng">'+gh[d].Cardcode+'</li>'
+									gh_Name +='<li class="li_zheng">'+gh[d].Name+'</li>'
+									gh_Finish +='<li class="li_zheng">'+gh[d].Finish+'</li>'
+								}
+								$("#guihua .Cardcode").html(gh_Cardcode)
+								$("#guihua .Name").html(gh_Name)
+								$("#guihua .Finish").html(gh_Finish)
+							}
+							
+						}else if(res.status == 5){
+							layer.msg("你当前不在服务时间，请在服务时间内操作！")
+						}
+						
+					}
+				});
+				
+//				var lis = $('#dymx li').length
+//				console.log(lis)
+//				var dy_height = ((lis - 1) * 41).toString()
+//				$('#dymx .xian').css('height', dy_height + 'px')
+				
+				
+			})
+			function xiazai() {
+				if(level == 1){
+					addPDF();
+				}else if(level == 2){
+					$.ajax({
+						type:"post",
+						url:ip+"download",
+						data:{
+							proposer:phone,
+							username:phone,
+							searchcode:searchcode
+						},
+						dataType: 'json',
+						success: function(res){
+							console.log(res)
+							if(res.status == 1){
+								addPDF();
+							}else{
+								layer.confirm('是否请求下载？', function(index) {
+									layer.close(index);
+									$.ajax({
+										type:"post",
+										url:ip+"apply",
+										data:{
+											proposer:phone,
+											username:phone,
+											searchcode:searchcode,
+											userid:Userid,
+											id: id
+										},
+										dataType: 'json',
+										success: function(re){
+											layer.msg(re.message);
+										}
+									})
+								});
+							}
+						}
+					});
+				}
+				
+			}
+//			水印
+			var heights = $("#shuiyin").height()
+			var textnode = phone + '\xa0' + searchtime +'\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + phone + '\xa0' + searchtime+'\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + phone + '\xa0' + searchtime
+			var gs = (heights / 400) + 5
+			for(var i = 0; i < gs; i++) { //循环添加页面的水印
+				var div1 = document.createElement("div");
+				//创建一个能够覆盖页面宽度且有一定高度的容器承载水印
+				div1.className = "wat"; //为容器元素添加类名，用来调试设计相应的样式
+				div1.style.height = "400px"; //先设置个高度再说
+				//这里写死，需要根据body测量结果并动态添加循环次数的孩子不要着急
+				var div2 = document.createElement("div"); //创建一个调试水印文字样式的子容器
+				div2.className = "watword"; //添加样式类
+				var textNode = document.createTextNode(textnode); //通过js方法给子容器写一句要水印的文字
+				div2.appendChild(textNode);
+				//文字节点添加进容器
+				div1.appendChild(div2);
+				//子容器添加到父类容器中  
+				document.getElementById("shuiyin").appendChild(div1);
+				//父容器再添加到body中
+			}
+//			生成PDF
+			function addPDF () {
+				// Get the element.
+				var element = document.getElementById('particulars');
+
+				// Generate the PDF.
+				html2pdf().from(element).set({
+					margin: 0,
+					filename: 'test.pdf',
+					html2canvas: {
+						scale: 2
+					},
+					jsPDF: {
+						orientation: 'portrait',
+						unit: 'in',
+						format: 'letter',
+						compressPDF: true
+					}
+				}).save();
+			}
+			
+			//			周边配套
+			function searchAround(keywords, pageIndex, coordinate, ul) {
+				coordinateArr = coordinate.split(",");
+				ptObj = new AMap.LngLat(coordinateArr[0], coordinateArr[1]);
+				AMap.service(["AMap.PlaceSearch"], function() {
+					var searchObj = new AMap.PlaceSearch({
+						pageSize: 3,
+						pageIndex: pageIndex,
+						extensions: 'base'
+					});
+					searchObj.searchNearBy(keywords, ptObj, 3000, function(status, result) {
+						if(status == 'complete') {
+							var str = '';
+							for(var i = 0; i < result.poiList.pois.length; i++) {
+								var pos = result.poiList.pois[i];
+								str += '<li>' + pos.name + '<span class="juli">' + pos.distance + '米</span></li>'
+							}
+							document.getElementById(ul).innerHTML = str;
+						}
+						if(status == 'no_data') {
+							document.getElementById(ul).innerHTML = '';
+						}
+						if(status == 'error') {
+							console.log('获取位置信息失败!');
+						}
+					})
+				})
+			};
+		</script>
+	</body>
+
+</html>

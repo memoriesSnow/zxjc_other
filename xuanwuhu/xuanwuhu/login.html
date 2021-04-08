@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>登录</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/common.css" rel="stylesheet" />
+		<link href="css/moresearch.css" rel="stylesheet" />
+		<link href="css/login.css" rel="stylesheet" />
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-3.4.1.min.js"></script>
+		<script src="js/common.js"></script> 
+		<script src="js/user.js"></script> 
+	</head>
+	<body>
+		<div class="mui-content">
+			<img class="title" src="images/userlog.png" />
+			<form class="mui-input-group" style="margin-bottom: .2rem;">
+				<div class="mui-input-row">
+					<p>
+						<img src="images/phone.png" />
+						<span>手机号</span>
+					</p>
+					<input id="phone" type="number" class="mui-input-clear">
+				</div>
+				<div class="mui-input-row">
+					<p>
+						<img src="images/code.png" />
+						<span>验证码</span>
+					</p>
+					<input id="code" type="number">
+					<a class="getcode" id="getValid">获取验证码</a>
+				</div>
+			</form>
+			<div class="facetitle" style="padding-left: .6rem;">
+				<div class="agreements">
+					<input id="yes" type="checkbox" checked />
+					<p>登录即同意《<a>玄五狐用户服务协议</a>》</p>
+				</div>
+			</div>
+			<div id="login" class="login"></div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		mui.init();
+		mui.plusReady(function () {
+			// var mobilecode = plus.device.uuid;
+			var phone = document.getElementById('phone');
+			var Code = document.getElementById('code');
+			// alert(mobilecode);
+			document.getElementById("login").addEventListener("tap",function(e){
+				e.stopPropagation();
+				if(document.getElementById("yes").checked){
+					var loginInfo = {
+						account: phone.value,
+						Code: Code.value
+						// mobilecode: mobilecode
+					};
+					app.login(loginInfo, function(err) {
+						if (err) {
+							mui.toast(err);
+							return; 
+						}
+						plus.webview.currentWebview().opener().reload();
+						mui.back();
+					});
+				}else{
+					mui.toast("需勾选同意玄五狐用户服务协议");
+				}
+			}); 
+			
+			mui(".agreements").on("tap","a",function(){
+				var title = $(this).text();
+				mui.openWindow({
+					url: "pages/agreement.html",
+					id: "agreement",
+					extras: {
+						title: title,
+						bs: 1 
+					}
+				});
+			});
+			
+			// 手机验证码
+			var getCode = document.getElementById('getValid');
+			getCode.addEventListener('tap', function() {
+				var _this = this;
+				var phone = document.getElementById('phone').value;
+				if(!checkMobile(phone)) {
+					mui.toast("请输入有效的手机号");
+					return;
+				}
+				// 发送短信
+				app.sendSMS(this, phone, function(err){
+					if(err) {
+						mui.toast(err);
+						return;
+					}
+				});
+			});
+			
+		});
+	</script>
+</html>

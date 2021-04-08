@@ -1,0 +1,100 @@
+.mui-content>.mui-table-view:first-child{
+	margin-top: .1rem;
+}
+body{
+	background-color: #f6f6f6;
+}
+.mui-content{
+	padding: 0 .4rem;
+}
+.mui-table-view-cell{
+	padding: .25rem 0 .2rem;
+}
+.mui-table-view-cell>a:not(.mui-btn){
+	margin: 0;
+	padding: 0;
+}
+.mui-table-view-cell:after{
+	left: 0;
+	background-color: #f1f1f1;
+}
+.mui-table-view-cell h4{
+	line-height: .5rem;
+	font-size: .3rem;
+	color: #222222;
+}
+.mui-table-view-cell p{
+	line-height: .4rem;
+	font-size: .27rem;
+	color: #A9A9A9;
+}
+.mui-navigate-right:after{
+	right: 0;
+	color: #A9A9A9;
+	top: 70%;
+	font-size: .36rem;
+}
+
+
+.mui-input-group{
+	padding-top: .6rem;
+	background-color: transparent;
+}
+.mui-input-group:before,
+.mui-input-group::after{
+	height: 0;
+}
+.mui-input-group .mui-input-row{
+	height: .9rem;
+	line-height: .9rem;
+	font-size: .3rem;
+	color: #222222;
+	position: relative;
+	overflow: visible;
+}
+.mui-input-group .mui-input-row input{
+	padding: 0;
+}
+.mui-input-group .mui-input-row:after{
+	left: 0;
+	background-color: #f0f0f0;
+}
+
+/* input::-ms-input-placeholder{
+	color: #222222;
+}
+input::-moz-placeholder{
+	color: #222222;
+}
+input::-webkit-input-placeholder{
+	color: #222222;
+}
+ */
+.edit{
+	background-color: transparent;
+}
+.edit p{
+	line-height: .6rem;
+	font-size: .25rem;
+	color: #a3a3a3;
+}
+
+.mui-input-group .mui-input-row.codemodel{
+	padding-right: 2rem;
+	display: none;
+}
+.getcode{
+	width: 1.54rem;
+	display: block;
+	float: right;
+	height: .7rem;
+	line-height: .7rem;
+	color: #FFFFFF;
+	background-color: #478ffb;
+	font-size: .25rem;
+	position: absolute;
+	right: -.08rem;
+	border-radius: .1rem;
+	bottom: .1rem;
+	text-align: center;
+}

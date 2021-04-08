@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>查询记录</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		<link href="../css/search.css" rel="stylesheet" />
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/jquery-3.4.1.min.js"></script>
+		<script src="../js/common.js"></script>
+		<script src="../js/user.js"></script>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">查询记录</h1>
+		</header>
+		<div class="mui-content">
+			<div class="fixmodel">
+				<div class="mui-input-row">
+					<input id="keyword" type="text" placeholder="请输入要查询的姓名或报告编号">
+					<img src="../images/search.png" id="searchbtn" />
+				</div>
+				<div class="tabs">
+					<ul>
+						<li class="on">
+							<p class="green">人房核验
+								<i class="house"></i>
+							</p>
+						</li>
+						<li>
+							<p class="blue">网贷信息
+								<i class="risk"></i>
+							</p>
+						</li>
+						<!-- <li>
+							<p class="other">车辆信息
+								<i class="car"></i>
+							</p>
+						</li> -->
+					</ul>
+				</div>
+			</div>
+			
+			<div class="mui-scroll-wrapper" id="Container">
+				<div class="mui-scroll">
+					<!--这里放置真实显示的DOM内容-->
+					<div class="content">
+						<ul class="mui-table-view" id="searchlist">
+							<!-- <li class="mui-table-view-cell">
+								<div class="leftcon fl">
+									<h4>张三
+										<span>142101199008190876</span>
+									</h4>
+									<p>电话：13110428907</p>
+									<p>日期：2020-03-28</p>
+								</div>
+								<div class="rightcon fr">
+									<a>复查</a>
+									<div class="card">
+										<span>2020032500001</span>
+										<p>报告编号</p>
+									</div>
+								</div>
+							</li> -->
+						</ul>
+					</div>
+				</div>
+			</div>
+			
+			<div id="mask">
+				<div class="maskwrap">
+					<img src="" />
+				</div>
+				<p>提示：二维码有效期2小时</p>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var pageindex = 1;
+		var pagesize = 5;
+		var flag = false;
+		var state = app.getState();
+		var userid = state.userid ? state.userid: 0;
+		var token = state.token ? state.token: 0;
+		var keyword = "", type = "", listid = "", timer="";
+		var mask = mui.createMask(function () {
+			document.getElementById("mask").style.display = "none";
+			window.clearInterval(timer);
+		});
+		var ordercode = "", balance = "";
+		var btnArray = ['确定', '取消'];
+		mui.init({
+			pullRefresh: {
+				container: "#Container", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+				down : {
+					style: 'circle',//必选，下拉刷新样式，目前支持原生5+ ‘circle’ 样式
+					height: '50px',//可选,默认50px.下拉刷新控件的高度,
+					offset: '50px', //可选 默认0px,下拉刷新控件的起始位置
+					callback :function(){
+						setTimeout(function() {
+							document.getElementById("searchlist").innerHTML = "";
+							var li = $(".tabs li");
+							for(var i=0;i<li.length;i++){
+								if(li.eq(i).hasClass("on")){
+									type = (li.eq(i).find("p").text()).substr(0,4);
+								}
+							} 
+							searchlist(type, keyword, 1, pagesize);
+							mui('#Container').pullRefresh().endPulldown();
+						}, 500);
+					} 
+				},
+				up : {
+					height: 50,//可选.默认50.触发上拉加载拖动距离
+					auto: true,//可选,默认false.自动上拉加载一次
+					contentrefresh : "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
+					contentnomore:'没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
+					callback: function(){
+						pageindex++;
+						var li = $(".tabs li");
+						for(var i=0;i<li.length;i++){
+							if(li.eq(i).hasClass("on")){
+								type = (li.eq(i).find("p").text()).substr(0,4);
+							}
+						} 
+						searchlist(type, keyword, pageindex, pagesize);
+						this.endPullupToRefresh(flag);
+					}
+				}
+			}
+		});
+		mui.plusReady(function() {
+			searchlist("人房核验", keyword, pageindex, pagesize);
+			
+			mui(".tabs").on("tap","li",function(e){
+				e.preventDefault();
+				document.getElementById("searchlist").innerHTML = "";
+				document.getElementById("keyword").value = "";
+				keyword = "";
+				$(".tabs li").removeClass("on");
+				$(this).addClass("on");
+				var int = $(this).index();
+				if(int==0){
+					searchlist("人房核验", keyword, 1, pagesize);
+					$(".mui-table-view-cell").css("box-shadow", "0 0 8px #e2f6ed");
+					$(".rightcon span").css("color", "#29c387");
+					$(".rightcon a").css({
+						"color": "#29c387",
+						"background-color": "#e2f6ed"
+					});
+				} else if(int==1){
+					searchlist("网贷信息", keyword, 1, pagesize);
+					$(".mui-table-view-cell").css("box-shadow", "0 0 8px #e2e2fa");
+					$(".rightcon span").css("color", "#6f6ee6");
+					$(".rightcon a").css({
+						"color": "#6f6ee6",
+						"background-color": "#e2e2fa"
+					});
+				} else if(int==2){
+					searchlist("车辆信息", keyword, 1, pagesize);
+					$(".mui-table-view-cell").css("box-shadow", "0 0 8px #eddfff");
+					$(".rightcon span").css("color", "#a760fe");
+					$(".rightcon a").css({
+						"color": "#a760fe",
+						"background-color": "#eddfff"
+					});
+				}
+			});
+			
+			mui("#searchlist").on("tap","li",function(e){
+				e.preventDefault();
+				listid = $(this).attr("id");
+				type = $(this).find(".leftcon").attr("data-type");
+				Person(ordercode);
+// 				var btnArray = ['余额', '微信支付'];
+//                 mui.confirm('本次扣除39.90元','请选择支付方式', btnArray, function(e) {
+//                     if (e.index == 1) { //微信支付
+// 						var sort = "支付";
+// 						PayCode(type, sort);
+//                     } else { //余额支付
+// 						var sort = "余额";
+// 						PayCode(type, sort);
+//                     }
+//                 });
+			});
+			
+			document.getElementById("searchbtn").addEventListener("tap", function(){
+				keyword = document.getElementById("keyword").value;
+				if(!keyword){
+					mui.toast("请输入要查询的姓名或报告编号");
+				}else{
+					document.getElementById("searchlist").innerHTML = "";
+					var li = $(".tabs li");
+					for(var i=0;i<li.length;i++){
+						if(li.eq(i).hasClass("on")){
+							type = (li.eq(i).find("p").text()).substr(0,4);
+							searchlist(type, keyword, 1, pagesize);
+						}
+					}
+				}
+				
+			});
+			
+		});
+		// 获取余额
+		function GetBalance(){
+			mui.ajax(serverUrl+'mycenter/GetBalance', {
+				data: {
+					userid: userid,
+					token: token
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					// console.log(JSON.stringify(data));
+					if(data.status == 1) {
+						balance = data.data;
+					} else {
+						mui.toast(data.info);
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					mui.toast("亲，您的网络环境不稳定，请稍后再试！");
+				}
+			});
+		};
+		
+		// 支付二维码
+		function PayCode(type, sort){
+			mui.ajax(serverUrl +'Payment/PayCode', {
+				data: {
+					userid: userid,
+					type: type,
+					sort: sort
+				}, 
+				async: true, 
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒
+				success: function(data) {
+					console.log(JSON.stringify(data));
+					if(data.status==1){
+						// mui.toast(data.info);
+						ordercode = data.ordercode;
+						$("#mask img").attr("src", data.imgbase);
+						mask.show();
+						document.getElementById("mask").style.display = "block";
+						// Person(ordercode);
+						timer = window.setInterval("SearchOrder()", 5000);
+					}else if(data.status==2){
+						ordercode = data.ordercode;
+						Person(ordercode);
+					}else{
+						mui.toast(data.info); 
+					} 
+				},
+				error: function(xhr, type, errorThrown) {
+					mui.toast("亲，您的网络环境不稳定，请稍后再试！");
+				}
+			});
+		};
+		
+		// 支付状态
+		function SearchOrder(){
+			mui.ajax(serverUrl +'payment/SearchOrder', {
+				data: {
+					ordercode: ordercode,
+					userid: userid
+				}, 
+				async: true,
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒
+				success: function(data) {
+					console.log(JSON.stringify(data));
+					if(data.status==1){
+						mui.toast(data.info);
+						window.clearInterval(timer);
+						mask.close(); 
+						document.getElementById("mask").style.display = "none";
+						Person(ordercode);
+					}else if(data.status==2){
+						mui.toast(data.info);
+					}else{
+						mui.toast(data.info);
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					mui.toast("亲，您的网络环境不稳定，请稍后再试！");
+				}
+			});
+		};
+		
+		function Person(ordercode){
+			mui.ajax(serverUrl + 'InfoSearch/GetSearchDetail', {
+				data: {
+					id: listid,
+					token: token,
+					type: type,
+					ordercode: ordercode
+				},
+				async: true,
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒
+				success: function(data) {
+					// console.log(JSON.stringify(data));
+					var info = data.info;
+					if (data.status == 1) {
+						mui.toast(data.info);
+						var datas = data.data;
+						
+						if(type=="车辆信息"){
+							mui.openWindow({
+								url: "cardetail.html",
+								id: "cardetail",
+								extras: {
+									datas: datas,
+									ordercode: ordercode,
+									info: info
+								}
+							}); 
+						}else if(type=="网贷信息"){
+							mui.openWindow({
+								url: "riskdetail.html",
+								id: "riskdetail",
+								extras: {
+									datas: datas,
+									ordercode: ordercode,
+									info: info
+								}
+							}); 
+						}else{
+							mui.openWindow({
+								url: "detailother.html",
+								id: "detailother",
+								extras: {
+									name: data.name,
+									idcard: data.idcard,
+									age: data.age,
+									housecode: data.propertycard,
+									located: data.located,
+									headimg: data.headimg,
+									gjj: data.gjj,
+									mate: data.mate,
+									passrate: data.passrate,
+									assets: data.assets,
+									limit: data.limit,
+									totalprice: data.totalprice,
+									housevalue: data.housevalue,
+									buildyear: data.buildyear,
+									apport: data.apport,
+									jacket: data.jacket,
+									houseuse: data.houseuse,
+									buildarea: data.buildarea,
+									nature: data.nature,
+									green: data.green,
+									plot: data.plot,
+									buscode: data.buscode,
+									communiname: data.communiname,
+									communilocated: data.communilocated,
+									resultid: data.resultid,
+									searchdate: data.searchdate,
+									coordinator: data.coordinator,
+									pipeidu: data.pipeidu,
+									pipeipercount: data.pipeipercount,
+									jobindex: data.jobindex,
+									jobcont: data.jobcont,
+									marrycont: data.marrycont,
+									jtcount: data.jtcount,
+									bankli: data.bankli,
+									dycou: data.dycou,
+									anjcou: data.anjcou,
+									ordercode: ordercode,
+									info: info,
+									righstatu: data.righstatu
+								}
+							}); 
+						}
+						
+					}else{
+						mui.toast(data.info);
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					mui.toast("亲，您的网络环境不稳定，请稍后再试！");
+				}
+			});
+		};
+		
+		function searchlist(type, keyword, pageindex, pagesize){
+			mui.ajax(serverUrl + 'InfoSearch/GetSearchList', {
+				data: {
+					userid: userid,
+					token: token,
+					type: type,
+					keyword: keyword,
+					pageindex: pageindex,
+					pagesize: pagesize
+				},
+				async: true,
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒
+				success: function(data) {
+					// console.log(JSON.stringify(data));
+					if (data.status == 1) {
+						// mui.toast(data.info);
+						var datas = data.data; 
+						if (datas.length <= 0) {
+							// mui.toast("没有数据");
+							flag = true;
+							return;
+						}
+						
+						for (var i = 0; i < datas.length; i++) {
+							var html = "";
+							var li = document.createElement('li');
+							li.className = "mui-table-view-cell";
+							li.id = datas[i].id;
+							
+							html +=	'<div class="leftcon fl" data-type="'+type+'">';
+							html +=	'<h4>'+ datas[i].name +'<span> '+ datas[i].idcard +'</span></h4>';
+							
+							if(type == "人房核验"){
+								html += '<p>房屋坐落：'+ datas[i].located +'</p>';
+							}else if(type == "网贷信息"){
+								html += '<p>手机号码：'+ datas[i].mobile +'</p>';
+							}else if(type == "车辆信息"){
+								html += '<p>车牌号：'+ datas[i].platenum +'</p>';
+							}
+							
+							html += '<p>日期：'+ datas[i].date +'</p></div><div class="rightcon fr">';
+							html +=	'<a id="'+datas[i].id+'">复查</a><div class="card">';
+							html +=	'<span>'+ datas[i].buscode +'</span><p>报告编号</p></div></div>';
+							
+							li.innerHTML = html;
+							document.getElementById("searchlist").appendChild(li);
+						}
+						
+					}else{
+						mui.toast(data.info);
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					mui.toast("亲，您的网络环境不稳定，请稍后再试！");
+				}
+			});
+		};
+		
+	</script>
+</html>

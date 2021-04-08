@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>网贷信息报告</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		<link href="../css/cardetail.css" rel="stylesheet" />
+		<link href="../css/detail.css" rel="stylesheet" />
+		<link href="../css/mui.picker.css" rel="stylesheet" />
+		<link href="../css/mui.poppicker.css" rel="stylesheet" />
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/jquery-3.4.1.min.js"></script>
+		<script src="../js/common.js"></script>
+		<script src="../js/user.js"></script>
+		<script src="../js/mui.picker.js"></script>
+		<script src="../js/mui.poppicker.js"></script>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">网贷信息报告</h1>
+		</header>
+		<div class="mui-content riskbase">
+			<div class="baseinfowrap">
+				<div class="baseinfo">
+					<div class="car">
+						<p class="fl">报告编号<span id="buscode">2020032110001</span></p>
+						<p class="fr">查询时间<span id="date">2020-03-21 12:24:31</span></p>
+					</div>
+					<h4 class="title">
+						<img src="../images/baseinfo.png" />
+						<span>基本信息</span>
+					</h4>
+					<div class="info">
+						<ul class="mui-table-view mui-grid-view">
+							<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+								<a href="#">
+									<p class="tit">姓名</p>
+									<h4 class="cont"><span id="name">姓名</span></h4>
+								</a>
+							</li>
+							<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+								<a href="#">
+									<p class="tit">性别</p>
+									<h4 class="cont"><span id="sex">男</span></h4>
+								</a>
+							</li>
+							<li class="mui-table-view-cell mui-media mui-col-xs-12 mui-col-sm-12">
+								<a href="#">
+									<p class="tit">所在城市</p>
+									<h4 class="cont"><span id="citylive">临汾地区</span></h4>
+								</a>
+							</li>
+							<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+								<a href="#">
+									<p class="tit">年龄</p>
+									<h4 class="cont"><span id="age">35</span></h4>
+								</a>
+							</li>
+							<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+								<a href="#">
+									<p class="tit">身份证号</p>
+									<h4 class="cont"><span id="idcard">身份证号</span></h4>
+								</a>
+							</li>
+							<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+								<a href="#">
+									<p class="tit">用户出生地(省份)</p>
+									<h4 class="cont"><span id="province">山西</span></h4>
+								</a>
+							</li>
+							<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+								<a href="#">
+									<p class="tit">用户出生地(城市)</p>
+									<h4 class="cont"><span id="city">侯马市</span></h4>
+								</a>
+							</li> 
+							<li class="mui-table-view-cell mui-media mui-col-xs-12 mui-col-sm-12">
+								<a href="#">
+									<p class="tit">手机号</p>
+									<h4 class="cont"><span id="phone">13903433575</span></h4>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="echartinfo">
+				<h4 class="title">
+					<img src="../images/baseinfo.png" />
+					<span>身份证曾使用机构类型</span>
+				</h4>
+				<div class="procent blue">
+					<div class="detail" id="idcardorg"></div>
+				</div>
+				<h4 class="title">
+					<img src="../images/baseinfo.png" />
+					<span>手机号曾使用机构类型</span>
+				</h4>
+				<div class="procent other">
+					<div class="detail" id="phoneorg"></div>
+				</div>
+				<h4 class="title">
+					<img src="../images/baseinfo.png" />
+					<span>用户被机构查询历史</span>
+				</h4>
+				<div class="procent green">
+					<div class="detail" id="historyorg"></div>
+				</div>
+				<h4 class="title">
+					<img src="../images/baseinfo.png" />
+					<span>身份证关联其他手机号</span>
+				</h4>
+				<div class="procent orange">
+					<div class="detail" id="idcardwithphone"></div>
+				</div>
+			</div>
+			
+			<div class="rule">
+				<h4>报告使用说明</h4>
+				<ol type="1">
+					<li>本报告是经用户认证授权同意后，我们才向合法存有个人信息的机构采集用户的个人信息并实时生成本报告。</li>
+					<li>未经认证授权用户本人允许，任何人不得复制、摘录、转载或发表本报告。</li>
+					<li>我们不保证本报告内容的及时性、准确性、完整性和合理性。本报告内容仅供参考，方便用户了解相关信息。由于本人或他人使用本报告而产生的任何后果或结果均与我们和数据合作方无关。</li>
+					<li>如果根据用户本人与其他机构或个人的约定，需要向这些机构或个人提供本报告，这是用户本人与这些机构或个人之间的事情，是否提供本报告是用户个人的权利或义务，与本机构无关，本机构无权过问也无需知晓。</li>
+					<li>如果用户本人将此报告提供给他人或向他人展示，我们善意提醒用户由于上述行为，用户的个人信息可能会被泄露，由此可能会给用户带来不利的后果或无法预知的危害，请注意保护个人信息。</li>
+					<li>如您还有其他问题需要反馈，可通过以下表单提交给我们。我们会尽快处理！</li>
+				</ol>
+			</div>
+			
+			<div class="form">
+				<h4>表单</h4>
+				<ul>
+					<li>
+						<h4><i></i>问题类型</h4>
+						<p id="quetype">请选择问题类型</p>
+					</li>
+					<li>
+						<h4><i></i>问题描述</h4>
+						<input id="Describe" type="text" placeholder="请输入问题描述" />
+					</li>
+				</ul>
+				<button id="feedback" type="button" class="mui-btn mui-btn-blue">提交表单</button>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		mui.init();
+		var state = app.getState();
+		// console.log(JSON.stringify(state));
+		var userid = state.userid ? state.userid: 0;
+		var token = state.token ? state.token: 0;
+		var datas = "", located = "";
+		
+		mui.plusReady(function () {
+			var self = plus.webview.currentWebview();
+			datas = self.datas;
+			var info = self.info;
+			var ordercode = self.ordercode;
+			// console.log(ordercode);
+			var idcardorg = datas.idcardorg;
+			var phoneorg = datas.phoneorg;
+			var historyorg = datas.historyorg;
+			var idcardwithphone = datas.idcardwithphone;
+			// alert(JSON.stringify(datas));
+			document.getElementById("buscode").innerHTML = datas.buscode;
+			document.getElementById("date").innerHTML = datas.date;
+			
+			document.getElementById("name").innerHTML = datas.name;
+			document.getElementById("sex").innerHTML = datas.sex;
+			document.getElementById("citylive").innerHTML = datas.citylive;
+			document.getElementById("age").innerHTML = datas.age;
+			document.getElementById("idcard").innerHTML = starReplace(datas.idcard, 6, 14);
+			document.getElementById("province").innerHTML = datas.province;
+			document.getElementById("city").innerHTML = datas.city;
+			document.getElementById("phone").innerHTML = datas.phone;
+			
+			// 身份证曾使用机构类型
+			for (var i=0;i<idcardorg.length;i++) {
+				var html = "";
+				var div = document.createElement('div');
+				div.className = "process";
+				html +=	'<div class="mui-media-object mui-pull-left">';
+				if(i<9){
+					html += '<i>0'+(i+1)+'</i>';
+				}else{
+					html += '<i>'+(i+1)+'</i>';
+				}
+				html +=	'<div class="line"></div></div><div class="mui-media-body">';
+				html +=	'<h4>' + idcardorg[i].title + '</h4>';
+				html +=	'<p>' + idcardorg[i].date + '</p></div>';
+				
+				div.innerHTML = html;
+				document.getElementById("idcardorg").appendChild(div);
+			}
+			// 手机号曾使用机构类型
+			for (var i=0;i<phoneorg.length;i++) {
+				var html = "";
+				var div = document.createElement('div');
+				div.className = "process";
+				html +=	'<div class="mui-media-object mui-pull-left">';
+				if(i<9){
+					html += '<i>0'+(i+1)+'</i>';
+				}else{
+					html += '<i>'+(i+1)+'</i>';
+				}
+				html +=	'<div class="line"></div></div><div class="mui-media-body">';
+				html +=	'<h4>' + phoneorg[i].title + '</h4>';
+				html +=	'<p>' + phoneorg[i].date + '</p></div>';
+				
+				div.innerHTML = html;
+				document.getElementById("phoneorg").appendChild(div);
+			}
+			// 用户被机构查询历史
+			for (var i=0;i<historyorg.length;i++) {
+				var html = "";
+				var div = document.createElement('div');
+				div.className = "process";
+				html +=	'<div class="mui-media-object mui-pull-left">';
+				if(i<9){
+					html += '<i>0'+(i+1)+'</i>';
+				}else{
+					html += '<i>'+(i+1)+'</i>';
+				}
+				html +=	'<div class="line"></div></div><div class="mui-media-body">';
+				html +=	'<h4>' + historyorg[i].title + '</h4>';
+				html +=	'<p>' + historyorg[i].date + '</p></div>';
+				
+				div.innerHTML = html;
+				document.getElementById("historyorg").appendChild(div);
+			}
+			// 身份证关联其他手机号
+			for (var i=0;i<idcardwithphone.length;i++) {
+				var html = "";
+				var div = document.createElement('div');
+				div.className = "process";
+				html +=	'<div class="mui-media-object mui-pull-left">';
+				if(i<9){
+					html += '<i>0'+(i+1)+'</i>';
+				}else{
+					html += '<i>'+(i+1)+'</i>';
+				}
+				html +=	'<div class="line"></div></div><div class="mui-media-body">';
+				html +=	'<h4>' + idcardwithphone[i].susp_phone_operator+ idcardwithphone[i].susp_phone + '</h4>';
+				html +=	'<p>' + idcardwithphone[i].susp_phone_province+ idcardwithphone[i].susp_phone_city + '</p></div>';
+				
+				div.innerHTML = html;
+				document.getElementById("idcardwithphone").appendChild(div);
+			}
+		    
+			// 意见反馈表单提交
+			document.getElementById("feedback").addEventListener("tap", function(){
+				var type = document.getElementById("quetype");
+				var describe = document.getElementById("Describe");
+				
+				if(type.innerHTML == "请选择问题类型") {
+					mui.toast('请选择问题类型');
+					return;
+				}
+				if(!describe.value) {
+					mui.toast('请输入问题描述');
+					return;
+				}
+				
+				var backInfo = {
+					userid: userid,
+					name: datas.name,
+					code: datas.idcard,
+					type: type.innerHTML,
+					located: located,
+					describe: describe.value,
+					token: token
+				};
+				app.feedback(backInfo, function(err) {
+					if (err) {
+						mui.toast(err);
+						return; 
+					}
+					plus.webview.currentWebview().opener().reload();
+					mui.back();
+				});
+			});
+			var userPicker = new mui.PopPicker();
+			userPicker.setData([{
+				value: 'face',
+				text: '人房核验'
+			}, {
+				value: 'risk',
+				text: '网贷信息'
+			}, {
+				value: 'car',
+				text: '车辆信息'
+			}, {
+				value: 'other',
+				text: '其他'
+			}]);
+			document.querySelector("#quetype").addEventListener("tap",function(){
+				userPicker.show(function(items){
+					$("#quetype").html(items[0].text);
+				});
+			});
+			
+			mui.ajax(serverUrl +'payment/UseStatus',{
+				data:{
+					ordercode: ordercode,
+					info: info,
+					token: token,
+					userid: userid
+				}, 
+				dataType:'json',//服务器返回json格式数据
+				type:'post',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+				success:function(data){
+					// console.log(JSON.stringify(data));
+					if(data.status==1){
+						mui.toast(data.info);
+					}else if(data.status==0){
+						mui.toast(data.info);
+					}else{
+						mui.openWindow('../login.html','login',{});
+					}
+				},
+				error:function(xhr,type,errorThrown){
+					mui.toast("亲，您的网络环境不稳定，请稍后再试！");
+				}
+			});
+		});
+	</script>
+</html>

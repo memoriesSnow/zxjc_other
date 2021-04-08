@@ -1,0 +1,52 @@
+<html>
+ <head>
+ <title>WMI Scripting HTML</title>
+ 
+ </head>
+ <body>
+ 
+<div id="crmscontaier">
+            插件安装不正常请点击<a href="/DBMS/ActiveX/Setup.msi"><span style="color: #317EBD; font-weight: bold; font-size: 16px;">【这里】</span></a>下载手动安装。然后刷新该页面！
+            <object id="test" style="display: none" classid="clsid:FED17702-5CFB-41fd-95CB-1A947854C67A" codebase="/DBMS/ActiveX/Setup.msi" width="404" height="400" />
+        </div>
+ 
+
+
+ </body>
+ <script type="text/javascript">
+	 macaddr()
+ 	var Getmacaddr = document.getElementById("test");
+ 	            var mac = "";
+ 	            try {
+ 	                mac = Getmacaddr.GetOfMACAddr();
+ 	            }
+ 	            catch (ex) {
+ 	                document.getElementById("crmscontaier").style.display = "block";
+ 	                alert("辅助插件未安装，请先安装插件，否则程序会发生错误！")
+ 	                return;
+ 	            }
+ 	 
+ 	//判断是否安装插件，获取mac
+ 	        function macaddr() {
+ 	            var Getmacaddr = document.getElementById("test");
+ 	            alert(Getmacaddr.GetOfMACAddr());
+ 	        }
+ 	        //获取硬盘ID
+ 	        function DiskID() {
+ 	            var Getmacaddr = document.getElementById("test");
+ 	            alert(Getmacaddr.GetDiskID());
+ 	        }
+ 	        //判断是否已安装插件
+ 	        function kkk() {
+ 	            var crmsactivex = document.getElementById("test");
+ 	            try {
+ 	                if (crmsactivex.GetReady()) {
+ 	                }
+ 	            } catch (ex) {
+ 	                document.getElementById("crmscontaier").style.display = "block";
+ 	                alert("辅助插件未安装，请先安装插件！")
+ 	                return;
+ 	            }
+ 	        }
+ </script>
+</html>

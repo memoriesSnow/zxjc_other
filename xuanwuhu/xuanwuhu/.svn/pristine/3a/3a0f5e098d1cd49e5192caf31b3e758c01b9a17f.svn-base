@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>基本信息</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		<link href="../css/base.css" rel="stylesheet" />
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/jquery-3.4.1.min.js"></script>
+		<script src="../js/common.js"></script>
+		<script src="../js/user.js"></script>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">基本信息</h1>
+		</header>
+		<div class="mui-content">
+			<ul class="mui-table-view" id="baseinfo">
+				<li class="mui-table-view-cell">
+					<a class="href mui-navigate-right">
+						<p>公司名称</p>
+						<h4 id="company">xxxx</h4>
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="href mui-navigate-right">
+						<p>姓名</p>
+						<h4 id="realName">xx</h4>
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="href mui-navigate-right">
+						<p>手机号</p>
+						<h4 id="phone">13388888888</h4>
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a id="balance" class="mui-navigate-right">
+						<p>余额</p>
+						<h4 id="sale">0</h4>
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a id="out" class="mui-navigate-right">
+						<h4>退出登录</h4>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</body>
+	<script type="text/javascript">
+		mui.init();
+		var state = app.getState();
+		var userid = state.userid ? state.userid: 0;
+		var token = state.token ? state.token: 0;
+		var status = state.status ? state.status: 0;
+		var Company = state.companyname ? state.companyname: "公司名称";
+		var realName = state.realName ? state.realName: "真实姓名";
+		var phone = state.phone ? state.phone: "手机号";
+		var balance = state.balance ? state.balance: "0";
+		// alert(JSON.stringify(state)); 
+		mui.plusReady(function() {
+			document.getElementById("company").innerHTML = Company;
+			document.getElementById("realName").innerHTML = realName;
+			document.getElementById("phone").innerHTML = phone;
+			document.getElementById("sale").innerHTML = balance;
+			GetBalance();
+			
+			mui("#baseinfo").on("tap", "a.href", function(){
+				var title = $(this).find("p").text();
+				var cont = $(this).find("h4").text();
+				mui.openWindow({
+					url: "edit.html",
+					id: "edit",
+					extras: {
+						title: title,
+						cont: cont
+					}
+				}); 
+			});
+			
+			document.getElementById("out").addEventListener("tap",function(){
+				localStorage.setItem('$state',"");
+				plus.webview.currentWebview().opener().reload();
+				mui.back();
+			});
+			
+			document.getElementById("balance").addEventListener("tap",function(e){
+				e.preventDefault(); 
+				mui.openWindow('pay.html','pay',{});
+			});
+		});
+		
+		// 获取余额
+		function GetBalance(){
+			mui.ajax(serverUrl+'mycenter/GetBalance', {
+				data: {
+					userid: userid,
+					token: token
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					// console.log(JSON.stringify(data));
+					if(data.status == 1) {
+						document.getElementById("sale").innerHTML = data.data;
+					} else {
+						mui.toast(data.info);
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					mui.toast("亲，您的网络环境不稳定，请稍后再试！");
+				}
+			});
+		};
+		
+	</script>
+</html>

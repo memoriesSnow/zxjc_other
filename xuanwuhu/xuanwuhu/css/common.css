@@ -1,0 +1,233 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: "苹方";
+}
+.mui-table-view-cell>a:not(.mui-btn).mui-active{
+	background-color: #FFFFFF;
+}
+.mui-scrollbar {
+	display: none !important;
+}
+.mui-pull-bottom-wrapper{
+	text-align: center; 
+}
+body,.mui-content{
+	background: #ffffff;
+	width: 7.5rem;
+} 
+img {
+	border: 0;
+	display: block;
+	vertical-align: bottom;
+	object-fit: cover;
+}
+.mui-scroll-wrapper{
+	overflow: scroll;
+}
+
+ul,
+ol,
+li {
+	list-style: none;
+}
+
+:focus {
+	outline: 0;
+}
+
+address,
+caption,
+cite,
+code,
+dfn,
+em,
+strong,
+th,
+var,
+optgroup {
+	font-style: normal;
+	font-weight: normal;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-size: 100%;
+	font-weight: normal;
+	margin: 0;
+}
+p{
+	margin: 0;
+}
+input,
+button,
+textarea,
+select,
+optgroup,
+option {
+	font-family: inherit;
+	font-size: inherit;
+	font-style: inherit;
+	font-weight: inherit;
+	background-color: #fff;
+	border: none;
+}
+a {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: none;
+}
+
+/*@purpose To enable resizing for IE */
+/*@branch For IE6-Win, IE7-Win */
+input,
+button,
+textarea {
+	*font-size: 100%;
+}
+
+/* tables still need 'cellspacing="0"' in the markup */
+table,
+tr,
+td {
+	border-collapse: collapse;
+	border-spacing: 0;
+	margin: 0;
+	padding: 0;
+}
+
+caption,
+th {
+	text-align: left;
+}
+
+/**Common Css**/
+.fr {
+	float: right;
+}
+
+.fl {
+	float: left;
+}
+
+/*文本超出显示省略号*/
+.ehn,
+.otw,
+.tow {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.notclick{
+	pointer-events: none;
+}
+.mui-bar .mui-title{
+	font-size: 17px;
+	color: #555;
+	left: 70px;
+	right: 70px;
+}
+/* 头部导航返回箭头颜色修改 */
+.mui-bar-nav.mui-bar .mui-icon{
+	color: #000;
+}
+.mui-bar-nav{
+	background: #FFFFFF;
+	box-shadow: none;
+	border-bottom: 1px dotted #EFEFEF;
+	width: 7.5rem;
+}
+.mui-bar .morenav{
+	height: 44px;
+	line-height: 44px;
+	padding: 0 0 0 10px;
+	color: #000;
+}
+.mui-bar .morebtn{
+	height: 26px;
+	line-height: 26px;
+	padding: 0 10px;
+	background-color: #468efa;
+	margin: 9px 5px;
+	border-radius: 4px;
+	color: #FFFFFF;
+	font-size: 13px;
+}
+.mui-bar .morenav img{
+	width: auto;
+	height: 44px;
+	padding: 12px 0;
+}
+
+.mui-table-view-cell.mui-active{
+	background-color: #fff;
+}
+a.mui-active {
+    background-color: #fff;
+}
+.mui-table-view:before,
+.mui-table-view:after{
+	height: 0;
+}
+
+.up {
+	width:0;
+	height:0;
+	border-left: 4px solid transparent;
+	border-right: 4px solid transparent;
+	border-bottom: 8px solid #FFFFFF;
+}
+.down {
+	width:0;
+	height:0;
+	border-top: 8px solid #FFFFFF;
+	border-left: 4px solid transparent;
+	border-right: 4px solid transparent;
+}
+
+
+#goTopBtn{
+	position: fixed;
+	line-height: 36px;
+	width: 36px;
+	height: 36px;
+	bottom: 1.8rem;
+	cursor: pointer;
+	background: url(../images/list/top.png) no-repeat;
+	background-size: 100% 100%;
+	display: none;
+	z-index: 999;
+}
+.mui-btn-blue{
+	font-size: .28rem;
+}
+
+
+#mask{
+	position: fixed;
+	width: 5.1rem;
+	height: 5.6rem;
+	background-color: #FFFFFF;
+	top: 50%;
+	left: 1.2rem;
+	margin-top: -3.5rem;
+	border-radius: .2rem;
+	padding: .6rem .6rem .4rem;
+	z-index: 999;
+	display: none;
+}
+#mask img{
+	width: 3.9rem;
+	height: 3.9rem;
+	margin-bottom: .2rem;
+}
+#mask p{
+	margin: 0;
+	line-height: .5rem;
+}

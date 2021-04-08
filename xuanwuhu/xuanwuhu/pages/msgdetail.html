@@ -1,0 +1,67 @@
+<!Doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>消息详情</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		<link href="../css/message.css" rel="stylesheet" />
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/jquery-3.4.1.min.js"></script>
+		<script src="../js/common.js"></script>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">详情</h1>
+		</header>
+		<div class="mui-content">
+			<div class="contwrap">
+				<p class="title" id="title"></p>
+				<div class="time">
+					发布日期：<span id="date"></span>
+				</div>
+				<div class="cont" id="cont"></div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" charset="utf-8">
+		mui.init();
+		mui.plusReady(function() {
+			var self = plus.webview.currentWebview();
+			var listid = self.listid;
+			var token = self.token;
+			
+			getDetail(listid, token);
+		});
+		
+		function getDetail(listid, token) {
+			mui.ajax(serverUrl + 'FeedBack/MessRead', {
+				data: {
+					id: listid,
+					token: token
+				},
+				async: false,
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒
+				success: function(data) {
+					// console.log(JSON.stringify(data));
+					if(data.status == 1) {
+						var datas = data.data;
+						document.getElementById('title').innerHTML = datas.title;
+						document.getElementById('date').innerHTML = datas.date;
+						document.getElementById('cont').innerHTML = datas.cont;
+					}else{
+						mui.toast(data.info);
+					}
+				},
+				error: function() {
+					mui.toast("亲，您的网络环境不稳定，请稍后再试！");
+				}
+			});
+		};
+		
+	</script>
+</html>

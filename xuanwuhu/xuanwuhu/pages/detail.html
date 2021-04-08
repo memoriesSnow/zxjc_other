@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>人房核验报告</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		<link href="../css/alldetail.css" rel="stylesheet" />
+		<link href="../css/mui.picker.css" rel="stylesheet" />
+		<link href="../css/mui.poppicker.css" rel="stylesheet" />
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/jquery-3.4.1.min.js"></script>
+		<script src="../js/common.js"></script>
+		<script src="../js/user.js"></script>
+		<script src="../js/mui.picker.js"></script>
+		<script src="../js/mui.poppicker.js"></script>
+		<script src="../js/echarts.min.js"></script>
+		<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.14&key=99b1b16521465d46b312b2f84410a642&plugin=AMap.PlaceSearch"></script>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">人房核验报告</h1>
+		</header>
+		<div class="mui-content">
+			<div class="firstbg">
+				<div class="headinfo">
+					<div class="date">查询时间<span id="date">ymd sfm</span></div>
+					<div class="txwarp">
+						<img id="headimg" src="../images/motx.png" />
+					</div>
+					<div class="info">
+						<span id="name">xx</span>
+						<!-- <p>
+							<img src="../images/birth.png" />
+							<span id="age">xx</span>岁
+						</p> -->
+					</div>
+					<div id="idcard" class="card">xxxxxx********xxxx</div>
+					<div class="num">报告编号<span id="buscode">666666666666</span></div>
+					<img class="huan" src="../images/huan.png" />
+				</div>
+				
+				<div class="baseinfo">
+					<div class="title">
+						<img src="../images/base.png" />
+					</div>
+					<p id="righstatu"></p>
+					<ul class="info">
+						<li>
+							<span>房产证号</span>
+							<span class="cont" id="propertycard">晋(xx)太原市不动产权第xx号</span>
+						</li>
+						<li>
+							<span>房屋坐落</span>
+							<span class="cont" id="located">房屋坐落</span>
+						</li>
+					</ul>
+					<p>报告信息来源于互联网数据以及经个人授权的第三方机构，经过用户认证授权全方位客观展示人与房产的信息，如有疑问立即停止访问。本服务提供的信息仅作为参考，在您使用时应自行考量并自负风险。</p>
+					<img class="huan" src="../images/huan.png" />
+				</div>
+				
+				<div class="allinfo">
+					<div class="allone">
+						<div class="title">
+							<img src="../images/intron.png" />
+						</div>
+						<ul>
+							<li>
+								<p><span id="mate">n</span>%</p>
+								<b>人房匹配度</b>
+							</li>
+							<li>
+								<p><span id="passrate">n</span>%</p>
+								<b>申请通过率</b>
+							</li>
+							<li>
+								<p><span id="limit">n</span></p>
+								<b>风险测评指数</b>
+							</li>
+							<li>
+								<p><span id="totalprice">n</span>万元</p>
+								<b>房屋净值</b>
+							</li>
+							<li>
+								<p><span id="housevalue">n</span>万元</p>
+								<b>房屋残值</b>
+							</li>
+							<li>
+								<p><span id="assets">n</span>万元</p>
+								<b>家庭资产</b>
+							</li>
+						</ul>
+					</div>
+					<div class="alltwo" id="gjj">
+						<div class="title">
+							<img src="../images/fund.png" />
+						</div>
+						<ul class="first">
+							<li>
+								<h4><span id="grzhye">n</span>元</h4>
+								<p>个人账户余额</p>
+							</li>
+							<li>
+								<h4><span id="grjcjs">n</span>元</h4>
+								<p>个人缴存基数</p>
+							</li>
+							<li>
+								<h4><span id="gryjce">n</span>元</h4>
+								<p>个人月缴存额</p>
+							</li>
+							<li>
+								<h4><span id="grjcl">n</span>元</h4>
+								<p>个人缴存比例</p>
+							</li>
+							<li>
+								<h4><span id="dwyjce">n</span>元</h4>
+								<p>单位月缴存额</p>
+							</li>
+							<li>
+								<h4><span id="dwjcl">n</span>元</h4>
+								<p>单位缴存比例</p>
+							</li>
+						</ul>
+						<ul class="second">
+							<li>
+								<span><i></i>单位名称</span>
+								<h4 id="dwmc">xx</h4>
+							</li>
+							<li>
+								<span><i></i>所属分理处</span>
+								<h4 id="jgmc">xx</h4>
+							</li>
+							<li>
+								<span><i></i>个人账户状态</span>
+								<h4 id="grzhzt">xx</h4>
+							</li>
+							<li>
+								<span><i></i>贷款状态</span>
+								<h4 id="sfyzfdk">xx</h4>
+							</li>
+							<li>
+								<span><i></i>个人月收入</span>
+								<h4 class="special"><span id="grysr">xx</span>元</h4>
+							</li>
+							<li>
+								<span><i></i>配偶</span>
+								<h4 id="poxm">名字</h4>
+							</li>
+							<li>
+								<span><i></i>开户日期</span>
+								<h4 id="djrq">ny</h4>
+							</li>
+							<li>
+								<span><i></i>启缴年月</span>
+								<h4 id="qjny">ny</h4>
+							</li>
+							<li>
+								<span><i></i>交至年月</span>
+								<h4 id="jzny">ny</h4>
+							</li>
+						</ul>
+					</div>
+					
+					<div class="allthird">
+						<div class="title">
+							<img src="../images/que.png" />
+						</div>
+						<div class="model">
+							<div class="modelwrap">
+								<img src="../images/xing.png" />
+								<div class="info">
+									<h4 id="housenum"></h4>
+									<span>万元</span>
+								</div>
+							</div>
+							<div class="details">
+								<span>解读</span>
+								房屋残值根据房屋净值得出，综合反映所抵押房产价值，仅供参考。
+							</div>
+						</div>
+					</div>
+					<div class="allfourth">
+						<div class="title">
+							<img src="../images/du.png" />
+						</div>
+						<div class="model">
+							<div class="modelwrap">
+								<div id="main"></div>
+								<p class="deco">
+									当前人房匹配度为<span id="matemore">n</span>%，属于<span id="pipeidu">xx</span>，<span id="count">存在n人共有的可能</span>。
+								</p>
+								<div class="details">
+									<span>解读</span>
+									人房匹配度根据房产权属数据得出分值，匹配度越高表示该房产为个人独有权属的可能性越大。匹配度0-14%为不匹配，15%-44%为一般匹配，45%-74%为相对匹配，75%-90%为较好匹配，90%以上为非常匹配。
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="allfifth">
+						<div class="title">
+							<img src="../images/passnum.png" />
+						</div>
+						<div class="model">
+							<div class="modelwrap">
+								<div class="process">
+									<div id="process">
+										<div class="mui-progressbar">
+											<span></span>
+										</div>
+										<p id="passnum">
+											<a><i class="down"></i></a>
+										</p>
+										<i class="start">0</i>
+										<i class="end">100</i>
+									</div>
+									<p class="tabs">
+										<i>房龄</i>
+										<i>房屋性质</i>
+										<i>房屋风险</i>
+									</p>
+								</div>
+								<div class="details">
+									<span>解读</span>
+									申请通过率根据房产金融数据得出分值，通过率低于60%时可能存在的金融信用风险比较大。
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="allsixth">
+						<div class="title">
+							<img src="../images/rask2.png" />
+						</div>
+						<div class="model">
+							<div class="modelwrap">
+								<div id="riskmain"></div>
+								<div class="details">
+									<span>解读</span>
+									风险测评根据金融和司法等处置情况得出等级，处置频次越多或周期越长，风险等级越高。
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="allseventh">
+						<div class="title">
+							<img src="../images/bank.png" />
+						</div>
+						<div class="model">
+							<div class="modelwrap">
+								<div id="bankmain"></div>
+								<div class="details">
+									<span>解读</span>
+									银行抵押根据房产金融数据得出，反映用户的部分历史行为特征，为资金申请提供一定的参考依据。
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="alleighth">
+						<div class="title">
+							<img src="../images/family.png" />
+						</div>
+						<div class="model">
+							<div class="modelwrap">
+								<div class="family">
+									<h4>
+										<span class="fl">预估资产不低于</span>
+										<span class="fr"><i id="familynum">n</i>万元</span>
+									</h4>
+								</div>
+								<div class="details">
+									<span>解读</span>
+									资产估值根据特定模型测算得出，资产估值越高，说明履约能力越强，资金申请成功率及额度更高。
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="allninth">
+						<div class="title">
+							<img src="../images/rask.png" />
+						</div>
+						<div class="model">
+							<div class="modelwrap">
+								<div class="history">
+									<ul class="mui-table-view">
+										<li class="mui-table-view-cell mui-media">
+											<div class="mui-media-object mui-pull-left"></div>
+											<div class="mui-media-body">曾有按揭购房<span id="anjcou">n</span>套以上</div>
+											<i class="line"></i>
+										</li>
+										<li class="mui-table-view-cell mui-media">
+											<div class="mui-media-object mui-pull-left"></div>
+											<div class="mui-media-body">曾有抵押贷款<span id="dycou">n</span>套以上</div>
+											<i class="line"></i>
+										</li>
+									</ul>
+									<p>贷款</p>
+								</div>
+								<div class="details">
+									<span>解读</span>
+									贷款情况根据消费行为、互联网行为、资产状况等模型计算得出，用户曾有贷款的历史记录可侧面反映其金融认知和资产能力。
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="alltenth alltwo">
+						<div class="title">
+							<img src="../images/house.png" />
+						</div>
+						<div class="model">
+							<div class="modelwrap">
+								<div class="houseinfo"  style="overflow: hidden;">
+									<ul class="mui-table-view titcon">
+										<li class="mui-table-view-cell mui-media">
+											<img class="mui-media-object mui-pull-left" src="../images/detail.png">
+											<div class="mui-media-body" id="address">
+												小区名字
+												<p class="mui-ellipsis">坐落地址</p>
+											</div>
+										</li>
+									</ul>
+									<ul class="second">
+										<li>
+											<span><i>年</i>建成年代</span>
+											<h4><span id="buildyear">xx</span></h4>
+										</li>
+										<li>
+											<span><i>土</i>房屋性质</span>
+											<h4><span id="nature">xx</span></h4>
+										</li>
+										<li>
+											<span><i>建</i>建筑面积</span>
+											<h4><span id="buildarea">n</span>㎡</h4>
+										</li>
+										<li>
+											<span><i>套</i>套内面积</span>
+											<h4><span id="jacket">n</span>㎡</h4>
+										</li>
+										<li>
+											<span><i>分</i>分摊面积</span>
+											<h4><span id="apport">n</span>㎡</h4>
+										</li>
+										<li>
+											<span><i>房</i>房屋用途</span>
+											<h4><span id="houseuse">xx</span></h4>
+										</li>
+										<li>
+											<span><i>绿</i>绿化率</span>
+											<h4><span id="greennum">n</span>%</h4>
+										</li>
+										<li>
+											<span><i>容</i>容积率</span>
+											<h4><span id="plot">n</span></h4>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="alleleventh">
+						<h4 class="title">配套解析</h4>
+						<div class="model know">
+							<div class="modelwrap">
+								<div class="mapwrap">
+									<div class="mapcont" id="maplist">
+										<div class="mapmodel">
+											<a class="greenbg">学校</a>
+											<ul id="green" class="maplist green">
+												<li>
+													<p class="mui-ellipsis fl">山西省太原市尖草坪区</p>
+													<span class="fr">300米</span>
+												</li>
+											</ul>
+										</div>
+										<div class="mapmodel">
+											<a class="orangebg">银行</a>
+											<ul id="orange" class="maplist orange"></ul>
+										</div>
+										<div class="mapmodel">
+											<a class="bluebg">商场</a>
+											<ul id="blue" class="maplist blue"></ul>
+										</div>
+										<div class="mapmodel">
+											<a class="redbg">医院</a>
+											<ul id="red" class="maplist red"></ul>
+										</div>
+										<div class="mapmodel">
+											<a class="otherbg">超市</a>
+											<ul id="other" class="maplist other"></ul>
+										</div>
+										
+									</div>
+								</div>
+								<p class="remark">备注：所有配套信息均为小区1-3公里范围之内的</p>
+								<div class="details">
+									<span>解读</span>
+									房产信息和配套解析根据房产大数据与多维度模型算法得出，解析分值越高代表居住条件越好，反映用户生活品质越高，房产升值空间越大。
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="alltwelfth">
+						<div class="title">
+							<img src="../images/price.png" />
+						</div>
+						<div class="model">
+							<div class="modelwrap">
+								<div id="housemain"></div>
+								<div class="details">
+									<span>解读</span>
+									房产升值指数，结合各项数据，根据科学模型测算得出，结果仅供参考，在一定程度上具有投资指引作用。
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="allthirteenth">
+						<div class="title">
+							<img src="../images/sex.png" />
+						</div>
+						<div class="model familysex">
+							<div class="modelwrap">
+								<h4 id="familydetail">XX已婚概率较大，家庭人口数量约N人以上。</h4>
+								<div class="details">
+									<span>解读</span>
+									婚育情况根据身份信息和大数据预测得出结论，反映婚否与家庭成员数量，仅供参考。
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="allfourteenth">
+						<div class="title">
+							<img src="../images/fature.png" />
+						</div>
+						<div class="model peohouse">
+							<div class="modelwrap">
+								<p class="deco" id="nolist">
+									当前职业前景指数为<span id="number">xx</span>，职业为<span id="company">xx</span>的可能性大。
+								</p>
+								<div id="formmain"></div>
+								<div class="details">
+									<span>解读</span>
+									职业前景根据用户信息、职业状况、资产评估等模型计算得出结论，反映未来发展的潜力深度，指数范围60-100，指数越高，预测其发展潜力越大。指数范围0-34为其他，35-49为公职，50-69为私营企业，70-84为国有企业，85以上为机关事业单位。
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="lastbg">
+				<div class="rule">
+					<h4>报告使用说明</h4>
+					<ol type="1">
+						<li>本报告是经用户认证授权同意后，我们才向合法存有个人信息的机构采集用户的个人信息并实时生成本报告。</li>
+						<li>未经认证授权用户本人允许，任何人不得复制、摘录、转载或发表本报告。</li>
+						<li>我们不保证本报告内容的及时性、准确性、完整性和合理性。本报告内容仅供参考，方便用户了解相关信息。由于本人或他人使用本报告而产生的任何后果或结果均与我们和数据合作方无关。</li>
+						<li>如果根据用户本人与其他机构或个人的约定，需要向这些机构或个人提供本报告，这是用户本人与这些机构或个人之间的事情，是否提供本报告是用户个人的权利或义务，与本机构无关，本机构无权过问也无需知晓。</li>
+						<li>如果用户本人将此报告提供给他人或向他人展示，我们善意提醒用户由于上述行为，用户的个人信息可能会被泄露，由此可能会给用户带来不利的后果或无法预知的危害，请注意保护个人信息。</li>
+						<li>如您还有其他问题需要反馈，可通过以下表单提交给我们。我们会尽快处理！</li>
+					</ol>
+				</div>
+				<div class="form">
+					<h4>表单</h4>
+					<ul>
+						<li>
+							<h4><i></i>问题类型</h4>
+							<p id="quetype">请选择问题类型</p>
+						</li>
+						<li>
+							<h4><i></i>问题描述</h4>
+							<input id="Describe" type="text" placeholder="请输入问题描述" />
+						</li>
+					</ul>
+					<button id="feedback" type="button" class="mui-btn mui-btn-blue">提交表单</button>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		mui.init();
+		var keyword = "", ul = "", coordinate = "", headimg = "";
+		var mapObj, searchObj = "";
+		var state = app.getState();
+		var userid = state.userid ? state.userid: 0;
+		var token = state.token ? state.token: 0;
+		
+		var name = "", idcard = "",age = "", housecode = "", located = "";
+		var mate = "", passrate = "", limit = "", assets = "", resultid = "", info = "";
+		mui.plusReady(function() {
+			var self = plus.webview.currentWebview();
+			name = self.name;
+			idcard = self.idcard;
+			age = self.age;
+			housecode = self.housecode;
+			located = self.located;
+			var gjj = self.gjj;
+			var perinfo = self.perinfo;
+			var ordercode = self.ordercode;
+			// console.log(JSON.stringify(perinfo));
+			headimg = self.headimg;
+			
+			// 基于准备好的dom，初始化echarts实例
+			var myChart = echarts.init(document.getElementById('main'));
+			var riskChart = echarts.init(document.getElementById('riskmain'));
+			var bankChart = echarts.init(document.getElementById('bankmain'));
+			var houseChart = echarts.init(document.getElementById('housemain'));
+			var formChart = echarts.init(document.getElementById('formmain'));
+			
+			var colorTemplate1 = [[0.14, '#f12433'],[0.44, '#f06336'],[0.74, '#fbc132'],[0.9, '#76cc4f'],[1, '#08a3fd']]; 
+			var colorTemplate = [[0.34, '#f12433'],[0.49, '#f06336'],[0.69, '#fbc132'],[0.84, '#76cc4f'],[1, '#08a3fd']];
+			document.getElementById("name").innerHTML = name;
+			plus.nativeUI.showWaiting("第三方数据调取中", "");
+			// 人房核验详情
+			mui.ajax(serverUrl +'InfoSearch/PerHouse',{
+				data:{
+					userid: userid,
+					name: name,
+					idcard: idcard,
+					age: age,
+					housecode: housecode,
+					located: located,
+					token: token,
+					headimg: headimg,
+					assets: perinfo.assets,
+					jobindex: perinfo.jobindex,
+					jobcont: perinfo.jobcont,
+					marrycont: perinfo.marrycont,
+					jtcount: perinfo.jtcount,
+					ordercode: ordercode 
+				},
+				dataType:'json',//服务器返回json格式数据
+				type:'post',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+				success:function(data){
+					// console.log(JSON.stringify(data)); 
+					plus.nativeUI.closeWaiting();
+					if (data.status == 1) {
+						if(!headimg){
+							if(data.sex=="男"){
+								document.getElementById("headimg").src = "../img/nan.png"; 
+							}else{
+								document.getElementById("headimg").src = "../img/nv.png"; 
+							}
+						}else{
+							document.getElementById("headimg").src = headimg; 
+						}
+						
+						mate = data.mate;
+						passrate = data.passrate; 
+						limit = data.limit;
+						coordinate = data.coordinator;
+						resultid = data.resultid;
+						// console.log(resultid);
+						document.getElementById("buscode").innerHTML = data.buscode;
+						document.getElementById("date").innerHTML = data.searchdate;
+						// document.getElementById("age").innerHTML = data.age;
+						document.getElementById("idcard").innerHTML = starReplace(data.idcard, 6, 14); 
+						document.getElementById("propertycard").innerHTML = data.propertycard;
+						document.getElementById("located").innerHTML = data.located;
+						var located = data.located;
+						if(data.righstatu){
+							document.getElementById("propertycard").style.color = "#FF0000";
+							document.getElementById("righstatu").innerHTML = "当前产权号不是该房屋坐落的产权号";
+						}
+						
+						if(!gjj){
+							document.getElementById("gjj").style.display = "none";
+						}else{
+							// 公积金
+							document.getElementById("dwmc").innerHTML = gjj.dwmc;
+							document.getElementById("jgmc").innerHTML = gjj.jgmc;
+							document.getElementById("grzhzt").innerHTML = gjj.grzhzt;
+							document.getElementById("sfyzfdk").innerHTML = gjj.sfyzfdk;
+							if(!gjj.poxm){
+								$("#poxm").parent().css("display","none");
+							}else{
+								document.getElementById("poxm").innerHTML = gjj.poxm;
+							}
+							document.getElementById("grysr").innerHTML = gjj.grysr;
+							document.getElementById("grzhye").innerHTML = gjj.grzhye;
+							document.getElementById("grjcjs").innerHTML = gjj.grjcjs;
+							document.getElementById("gryjce").innerHTML = gjj.gryjce;
+							document.getElementById("grjcl").innerHTML = gjj.grjcl;
+							document.getElementById("dwyjce").innerHTML = gjj.dwyjce;
+							document.getElementById("dwjcl").innerHTML = gjj.dwjcl;
+							document.getElementById("djrq").innerHTML = gjj.djrq;
+							document.getElementById("qjny").innerHTML = gjj.qjny;
+							document.getElementById("jzny").innerHTML = gjj.jzny;
+							
+							returngjj(gjj);
+						} 
+						
+						document.getElementById("mate").innerHTML = mate;
+						document.getElementById("passrate").innerHTML = passrate;
+						document.getElementById("limit").innerHTML = limit;
+						document.getElementById("totalprice").innerHTML = data.totalprice;
+						document.getElementById("housevalue").innerHTML = data.housevalue;
+						document.getElementById("assets").innerHTML = data.assets; 
+						document.getElementById("familynum").innerHTML = data.assets;
+						
+						document.getElementById("housenum").innerHTML = data.housevalue;
+						document.getElementById("matemore").innerHTML = mate;
+						document.getElementById("pipeidu").innerHTML = data.pipeidu;
+						if(data.pipeipercount==0){
+							document.getElementById("count").innerHTML = "可能不属于个人所有";
+						}else if(data.pipeipercount==1){
+							document.getElementById("count").innerHTML = "可能属于个人所有";
+						}else{
+							document.getElementById("count").innerHTML = "存在"+data.pipeipercount+"人共有的可能";
+						}
+						
+						// 人房匹配度
+						myChart.setOption({
+							tooltip: {
+								formatter: '{a} <br/>{b} : {c}%'
+							},
+							series: [{
+									type: "gauge",
+									center: ["50%", "50%"], // 仪表位置
+									radius: "100%", //仪表大小
+									detail: { // 仪表盘详情，用于显示数据。
+										show: false,
+									},
+									axisLine: {
+										show: true,
+										lineStyle: { // 仪表盘轴线样式。
+											color: [[1,"#eee"]],
+											width: 10
+										}
+									},
+									splitLine: {
+										show: false
+									},
+									axisTick: {
+										show: false
+									},
+									axisLabel: {
+										show: false
+									}
+								},
+								{
+									name: '人房匹配度',
+									type: 'gauge',
+									radius: "90%",
+									center: ["50%", "50%"],
+									title: { // 仪表盘标题。
+										show: true, // 是否显示标题,默认 true。
+										offsetCenter: [0, "90%"], //相对于仪表盘中心的偏移位置，数组第一项是水平方向的偏移，第二项是垂直方向的偏移。可以是绝对的数值，也可以是相对于仪表盘半径的百分比。
+										// color: "#fec72f",			// 文字的颜色,默认 #333。
+										fontSize: 15, // 文字的字体大小,默认 15。
+									},
+									detail: { // 仪表盘详情，用于显示数据。
+										show: true, // 是否显示详情,默认 true。
+										offsetCenter: [0, "60%"], // 相对于仪表盘中心的偏移位置，数组第一项是水平方向的偏移，第二项是垂直方向的偏移。可以是绝对的数值，也可以是相对于仪表盘半径的百分比。
+										color: "auto", // 文字的颜色,默认 auto。
+										fontSize: 28, // 文字的字体大小,默认 15。
+										formatter: "{value}%", // 格式化函数或者字符串
+									},
+									data: [{
+										value: mate,
+										name: '匹配度'
+									}],
+									axisLine: { // 仪表盘轴线(轮廓线)相关配置。
+										show: true, // 是否显示仪表盘轴线(轮廓线),默认 true。
+										lineStyle: { // 仪表盘轴线样式。
+											color: colorTemplate1,
+											width: 10
+										}
+									},
+									splitLine: { // 分隔线样式。
+										show: true,
+										length: 10,
+										lineStyle: {
+											color: "#eee",
+											width: 1,
+										}
+									},
+									axisTick: { // 刻度(线)样式。
+										show: true, // 是否显示刻度(线),默认 true。
+										splitNumber: 5, // 分隔线之间分割的刻度数,默认 5。
+										length: 10, // 刻度线长。支持相对半径的百分比,默认 8。
+										lineStyle: { // 刻度线样式。	
+											color: "#eee",
+											width: 1,
+										},
+									},
+									axisLabel: { // 刻度标签。
+										show: true, // 是否显示标签,默认 true。
+										distance: 5, // 标签与刻度线的距离,默认 5。
+										color: "#000", // 文字的颜色,默认 #fff。
+										fontSize: 10, // 文字的字体大小,默认 5。
+										formatter: "{value}",
+									},
+									pointer: { // 仪表盘指针。
+										show: true, // 是否显示指针,默认 true。
+										length: "85%", // 指针长度，可以是绝对数值，也可以是相对于半径的百分比,默认 80%。
+										width: 5,
+									},
+									itemStyle: {
+										color: "#cfcfcf",
+									}
+								}
+							]
+						});
+						
+						// 申请通过率
+						document.getElementById("passnum").innerHTML = passrate +'%<a><i class="down"></i></a>';
+						mui("#process").progressbar({
+							progress: passrate
+						}).show(3000);
+						$("#process p").css({
+							"right": (100 - passrate) + "%",
+							"display": "block"
+						});
+						
+						// 风险测评
+						riskChart.setOption({
+							tooltip: {
+								formatter: "{a} <br/>{b} : {c}%"
+							},
+							series: [
+								{
+									startAngle: 180,
+									endAngle: 0,
+									type: 'gauge',
+									name: '风险测评',
+									radius: "90%",
+									center: ["50%", "60%"],
+									title: { // 仪表盘标题。
+										show: true, // 是否显示标题,默认 true。
+										offsetCenter: [0, "60%"], //相对于仪表盘中心的偏移位置，数组第一项是水平方向的偏移，第二项是垂直方向的偏移。可以是绝对的数值，也可以是相对于仪表盘半径的百分比。
+										color: "#000", // 文字的颜色,默认 #333。
+										fontSize: 15, // 文字的字体大小,默认 15。
+									},
+									detail: { // 仪表盘详情，用于显示数据。
+										show: true, // 是否显示详情,默认 true。
+										offsetCenter: [0, "28%"], // 相对于仪表盘中心的偏移位置，数组第一项是水平方向的偏移，第二项是垂直方向的偏移。可以是绝对的数值，也可以是相对于仪表盘半径的百分比。
+										color: "auto", // 文字的颜色,默认 auto。
+										fontSize: 20, // 文字的字体大小,默认 15。
+										formatter: "{value}%", // 格式化函数或者字符串
+									},
+									data: [{
+										value: limit,
+										name: '风险指数'
+									}],
+									axisLine: {
+										lineStyle: {
+											width: 15,
+											color: [
+												[limit/100,'#0078ff'],
+												[1, '#eee']
+											]
+										}
+									},
+									pointer: { // 仪表盘指针。
+										show: true, // 是否显示指针,默认 true。
+										length: "76%", // 指针长度，可以是绝对数值，也可以是相对于半径的百分比,默认 80%。
+										width: 5,
+									},
+									itemStyle: {
+										color: "#cfcfcf",
+									},
+									axisTick: {
+										show: false
+									},
+									splitLine: {
+										show: false
+									},
+									splitNumber: 1,
+									axisLabel: {
+										show: false,
+									}
+								}
+							]
+						});
+						
+						// 抵押贷款
+						LoanBank(resultid, located);
+						
+						// 房产信息
+						document.getElementById("address").innerHTML = data.communiname+'<p class="mui-ellipsis">'+ data.communilocated +'</p>';
+						document.getElementById("buildyear").innerHTML = data.buildyear?data.buildyear: "暂未收录";
+						document.getElementById("nature").innerHTML = data.nature?data.nature: "暂未收录";
+						if(!data.buildarea){
+							document.getElementById("buildarea").parentNode.innerHTML = "<span>暂未收录</span>";
+						}else{
+							document.getElementById("buildarea").innerHTML = data.buildarea;
+						}
+						if(!data.jacket){
+							document.getElementById("jacket").parentNode.innerHTML = "<span>暂未收录</span>";
+						}else{
+							document.getElementById("jacket").innerHTML = data.jacket;
+						}
+						if(!data.apport){
+							document.getElementById("apport").parentNode.innerHTML = "<span>暂未收录</span>";
+						}else{
+							document.getElementById("apport").innerHTML = data.apport;
+						}
+						
+						document.getElementById("houseuse").innerHTML = data.houseuse?data.houseuse:"暂未收录";
+						if(!data.green){
+							document.getElementById("greennum").parentNode.innerHTML = "<span>暂未收录</span>";
+						}else{
+							document.getElementById("greennum").innerHTML = data.green.replace("%","");
+						}
+						document.getElementById("plot").innerHTML = data.plot?data.plot:"暂未收录";
+						
+						
+						// 未来5年房屋升值指数
+						mui.ajax(serverUrl +'infosearch/GetHousePrice',{
+							data:{},
+							dataType:'json',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							timeout:10000,//超时时间设置为10秒；
+							success:function(data){
+								// console.log(JSON.stringify(data));
+								if(data.status==1){
+									houseChart.setOption({
+										title: {
+											text: '未来5年房屋升值指数',
+											textStyle :{
+												color: '#858585',
+												fontSize: 15
+											},
+											left: 'center',
+											top: '6%'
+										},
+										tooltip: {
+											formatter: "{b} : {c}"
+										},
+										xAxis: {
+											type: 'category',
+											data: data.year,
+											axisLine:{
+												lineStyle:{
+													color:'#818181'
+												}
+											},
+											axisTick:{
+												show:false
+											},
+										},
+										yAxis: {
+											type: 'value',
+											splitLine: {
+												show: false
+											},
+											axisLine:{
+												show:false
+											},
+											axisTick:{
+												show:false
+											},
+										},
+										grid: {
+											top: '20%',
+											bottom: '14%',
+											left: '10%',
+											right: '8%'
+										},
+										series: [{
+											data: data.expon,
+											type: 'line',
+											symbol: 'circle',
+											center: ["50%", "80%"],
+											symbolSize: 5,
+											lineStyle: {
+												color: '#0f78f7',
+												width: 2,
+												type: 'solid'
+											},
+											itemStyle: {
+												borderWidth: 2,
+												borderColor: '#0f78f7',
+												color: 'white'
+											},
+											areaStyle: {
+												color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+													offset: 0,
+													color: '#f2f5fe'
+												}, {
+													offset: 1,
+													color: '#fbfcff'
+												}])
+											},
+										}]
+									});
+								}else{
+									mui.toast(data.info);
+								}
+							},
+							error:function(xhr,type,errorThrown){
+								mui.toast("亲，您的网络环境不稳定，请稍后再试！");
+							}
+						});
+						
+						
+						// 婚育情况
+						if(!perinfo.marrycont){
+							document.getElementById("familydetail").innerHTML = name +'婚育情况不详！';
+						}else{
+							document.getElementById("familydetail").innerHTML = name + perinfo.marrycont +'概率较大，家庭人口数量约'+perinfo.jtcount+'人以上。';
+						}
+						
+						// 职业前景
+						if(!perinfo.jobindex){
+							document.getElementById("nolist").innerHTML = "暂未收录您的信息！";
+							document.getElementById("formmain").style.display = "none";
+						}else{
+							document.getElementById("number").innerHTML = perinfo.jobindex;
+							document.getElementById("company").innerHTML = perinfo.jobcont;
+							var value = perinfo.jobindex;
+							formChart.setOption({
+								tooltip: {
+									formatter: '{a} <br/>{b} : {c}%'
+								},
+								series: [{
+										type: "gauge",
+										center: ["50%", "50%"], // 仪表位置
+										radius: "100%", //仪表大小
+										detail: { // 仪表盘详情，用于显示数据。
+											show: false,
+										},
+										axisLine: {
+											show: true,
+											lineStyle: { // 仪表盘轴线样式。
+												color: [[1,"#eee"]],
+												width: 10
+											}
+										},
+										splitLine: {
+											show: false
+										},
+										axisTick: {
+											show: false
+										},
+										axisLabel: {
+											show: false
+										}
+									},
+									{
+										name: '职业前景',
+										type: 'gauge',
+										radius: "90%",
+										center: ["50%", "50%"],
+										title: { // 仪表盘标题。
+											show: true, // 是否显示标题,默认 true。
+											offsetCenter: [0, "90%"], //相对于仪表盘中心的偏移位置，数组第一项是水平方向的偏移，第二项是垂直方向的偏移。可以是绝对的数值，也可以是相对于仪表盘半径的百分比。
+											fontSize: 15, // 文字的字体大小,默认 15。
+										},
+										detail: { // 仪表盘详情，用于显示数据。
+											show: true, // 是否显示详情,默认 true。
+											offsetCenter: [0, "60%"], // 相对于仪表盘中心的偏移位置，数组第一项是水平方向的偏移，第二项是垂直方向的偏移。可以是绝对的数值，也可以是相对于仪表盘半径的百分比。
+											color: "auto", // 文字的颜色,默认 auto。
+											fontSize: 28, // 文字的字体大小,默认 15。
+											formatter: "{value}", // 格式化函数或者字符串
+										},
+										data: [{
+											value: value,
+											name: '前景指数'
+										}],
+										axisLine: { // 仪表盘轴线(轮廓线)相关配置。
+											show: true, // 是否显示仪表盘轴线(轮廓线),默认 true。
+											lineStyle: { // 仪表盘轴线样式。
+												color: colorTemplate,
+												width: 10
+											}
+										},
+										splitLine: { // 分隔线样式。
+											show: true,
+											length: 10,
+											lineStyle: {
+												color: "#eee",
+												width: 1,
+											}
+										},
+										axisTick: { // 刻度(线)样式。
+											show: true, // 是否显示刻度(线),默认 true。
+											splitNumber: 5, // 分隔线之间分割的刻度数,默认 5。
+											length: 10, // 刻度线长。支持相对半径的百分比,默认 8。
+											lineStyle: { // 刻度线样式。	
+												color: "#eee",
+												width: 1,
+											},
+										},
+										axisLabel: { // 刻度标签。
+											show: true, // 是否显示标签,默认 true。
+											distance: 5, // 标签与刻度线的距离,默认 5。
+											color: "#000", // 文字的颜色,默认 #fff。
+											fontSize: 10, // 文字的字体大小,默认 5。
+											formatter: "{value}",
+										},
+										pointer: { // 仪表盘指针。
+											show: true, // 是否显示指针,默认 true。
+											length: "85%", // 指针长度，可以是绝对数值，也可以是相对于半径的百分比,默认 80%。
+											width: 5,
+										},
+										itemStyle: {
+											color: "#cfcfcf",
+										}
+									}
+								]
+							});
+						};
+						
+						// 地图配套解析
+						var len = $("#maplist .mapmodel");
+						for(var i=0;i<len.length;i++){
+							keyword = len.eq(i).find("a").text();
+							ul = len.eq(i).find(".maplist").attr("id");
+							if (coordinate == '') {
+								mui.toast('地图参数错误');
+								return false;
+							}else{
+								searchAround(keyword, 1, mapObj, searchObj, coordinate, ul);
+							}
+						};
+						
+					} else {
+						mui.toast(data.info);
+					}
+				},
+				error:function(xhr,type,errorThrown){
+					plus.nativeUI.closeWaiting();
+					mui.toast("亲，您的网络环境不稳定，请稍后再试！");
+				}
+			});
+			
+			// 意见反馈表单提交
+			document.getElementById("feedback").addEventListener("tap", function(){
+				var type = document.getElementById("quetype");
+				var describe = document.getElementById("Describe");
+				
+				if(type.innerHTML == "请选择问题类型") {
+					mui.toast('请选择问题类型');
+					return;
+				}
+				if(!describe.value) {
+					mui.toast('请输入问题描述');
+					return;
+				}
+				
+				var backInfo = {
+					userid: userid,
+					name: name,
+					code: idcard,
+					type: type.innerHTML,
+					located: located,
+					describe: describe.value,
+					token: token
+				};
+				app.feedback(backInfo, function(err) {
+					if (err) {
+						mui.toast(err);
+						return; 
+					}
+					plus.webview.currentWebview().opener().reload();
+					mui.back();
+				});
+			});
+			var userPicker = new mui.PopPicker();
+			userPicker.setData([{
+				value: 'face',
+				text: '人房核验'
+			}, {
+				value: 'risk',
+				text: '网贷信息'
+			}, {
+				value: 'other',
+				text: '其他'
+			}]);
+			document.querySelector("#quetype").addEventListener("tap",function(){
+				userPicker.show(function(items){
+					$("#quetype").html(items[0].text);
+				});
+			});
+			
+			// 银行抵押及贷款
+			function LoanBank(resultid, located){
+				plus.nativeUI.showWaiting("第三方数据提取中", "");
+				mui.ajax(serverUrl +'InfoSearch/LoanBank',{
+					data:{
+						located: located,
+						name: name,
+						idcard: idcard,
+						age: age,
+						token: token,
+						resultid: resultid
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					success:function(data){
+						// console.log(JSON.stringify(data)); 
+						info = data.info;
+						plus.nativeUI.closeWaiting();
+						if (data.status == 1) {
+							var servicedata = [];
+							var datas = data.bankli;
+							for(var i=0;i<datas.length;i++){
+								var obj = new Object();
+								obj.name = datas[i].bank; 
+								obj.value = datas[i].money;
+								servicedata[i] = obj;
+							}
+							// console.log(JSON.stringify(servicedata));
+							bankChart.setOption({
+								title: {
+									text: '银行审批通过率',
+									textStyle :{
+										color: '#9a9a9a',
+										fontSize: 12
+									},
+									left: 'center',
+									top: 'center',
+								},
+								series: [
+									{
+										name: '银行审批通过率',
+										type: 'pie',
+										radius: ['50%', '70%'],
+										avoidLabelOverlap: false,
+										color:['#ff3b49', '#ff9000', '#ffbb2a', '#29c387', '#46d1fa', '#278cff', '#e457f1', '#ff27a2'],
+										label: {
+											show: true,
+											position: 'left'
+										},
+										labelLine: {
+											show: true
+										},
+										data: servicedata
+									}
+								]
+							});
+							
+							if(data.dycou==0){
+								document.getElementById("dycou").parentNode.innerHTML = "暂无抵押贷款行为";
+							}else{
+								document.getElementById("dycou").innerHTML = data.dycou;
+							}
+							if(data.anjcou==0){
+								document.getElementById("anjcou").parentNode.innerHTML = "暂无按揭购房行为";
+							}else{
+								document.getElementById("anjcou").innerHTML = data.anjcou;
+							}
+							
+						} else {
+							mui.toast(data.info);
+						}
+						UseStatus(info);
+					}, 
+					error:function(xhr,type,errorThrown){
+						plus.nativeUI.closeWaiting();
+						mui.toast("亲，您的网络环境不稳定，请稍后再试！");
+					}
+				});
+			};
+			
+			// 改变订单状态
+			function UseStatus(info){
+				mui.ajax(serverUrl +'payment/UseStatus',{
+					data:{
+						ordercode: ordercode,
+						info: info,
+						token: token,
+						userid: userid
+					}, 
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					success:function(data){
+						// console.log(JSON.stringify(data));
+						if(data.status==1){
+							mui.toast(data.info);
+						}else if(data.status==0){
+							mui.toast(data.info);
+						}else{
+							mui.openWindow('../login.html','login',{});
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						mui.toast("亲，您的网络环境不稳定，请稍后再试！");
+					}
+				});
+			};
+			
+		});
+		
+		function searchAround(keywords, pageIndex, mapObj, searchObj, coordinate, ul) {
+			coordinateArr = coordinate.split(",");
+			ptObj = new AMap.LngLat(coordinateArr[0], coordinateArr[1]);
+			
+			searchObj = new AMap.PlaceSearch({
+				pageSize: 3, 
+				pageIndex: pageIndex,
+				extensions: 'base'
+			});
+			searchObj.searchNearBy(keywords, ptObj, 3000, function(status,result){
+				if(status == 'complete'){
+					var str = '';
+					for (var i = 0; i < result.poiList.pois.length; i++) {
+						var pos = result.poiList.pois[i];
+						var marker = new AMap.Marker({
+							map: mapObj,
+							position: [pos.location.lng, pos.location.lat],
+							icon: new AMap.Icon({
+								size: new AMap.Size(24, 28),
+								image: '../img/map/house3.png'
+							})
+						});
+						str += '<li><p class="mui-ellipsis fl">'+ pos.name +'</p><span class="fr">'+pos.distance+'米</span></li>';
+						
+					}
+					document.getElementById(ul).innerHTML = str; 
+				}
+				if(status == 'no_data'){
+					document.getElementById(ul).innerHTML = '';
+				}
+				if(status == 'error'){
+					mui.toast(result);
+				}
+			})
+		};
+		
+		function returngjj(gjj){
+			mui.ajax(serverUrl +'infosearch/fund',{
+				data:{
+					id: resultid,
+					dwmc: gjj.dwmc,
+					sfyzfdk: gjj.sfyzfdk, 
+					jgmc: gjj.jgmc,
+					djrq: gjj.djrq,
+					grzhye: gjj.grzhye,
+					gryjce: gjj.gryjce,
+					dwyjce: gjj.dwyjce,
+					grjcjs: gjj.grjcjs,
+					grzhzt: gjj.grzhzt,
+					jzny: gjj. jzny,
+					grjcl: gjj.grjcl,
+					dwjcl: gjj.dwjcl,
+					poxm: gjj.poxm,
+					grysr: gjj.grysr,
+					qjny: gjj.qjny
+				}, 
+				dataType:'json',//服务器返回json格式数据
+				type:'post',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+				success:function(data){
+					// console.log(JSON.stringify(data));
+					if(data.status==1){
+						mui.toast(data.info);
+					}else{
+						mui.toast(data.info);
+					} 
+				},
+				error:function(xhr,type,errorThrown){
+					mui.toast("亲，您的网络环境不稳定，请稍后再试！");
+				}
+			});
+		};
+		
+	</script>
+</html>

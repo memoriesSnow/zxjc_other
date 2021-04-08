@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<title>用户管理</title>
+		<link rel="stylesheet" href="../../assets/libs/layui/css/layui.css" />
+		<link rel="stylesheet" href="../../assets/module/admin.css?v=313" />
+		<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+		<style type="text/css">
+			.layui-input {
+				border-radius: 10px;
+			}
+			
+			.sousuo {
+				width: 90px;
+				border-radius: 10px;
+				height: 38px;
+				margin-left: 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<!-- 页面加载loading -->
+		<!-- <div class="page-loading">
+			<div class="ball-loader">
+				<span></span><span></span><span></span><span></span>
+			</div>
+		</div> -->
+
+		<!-- 正文开始 -->
+		<div class="layui-fluid">
+			<div class="layui-card">
+				<div class="layui-card-body table-tool-mini">
+					<div class="layui-form toolbar">
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-label w-auto">关键字搜索</label>
+								<div class="layui-input-inline mr0">
+									<input name="keywords" class="layui-input" type="text" placeholder="输入小区名称或房屋坐落" />
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-label w-auto">查询人</label>
+								<div class="layui-input-inline mr0">
+									<input name="searchuser" class="layui-input" type="text" placeholder="输入查询人" />
+								</div>
+							</div>
+							<!--<div class="layui-inline">
+								<label class="layui-form-label w-auto">身份证号</label>
+								<div class="layui-input-inline mr0">
+									<input name="idcard" class="layui-input" type="text" placeholder="输入身份证号" />
+								</div>
+							</div>-->
+							<div class="layui-inline" style="padding-right: 110px;">
+								<button class="layui-btn icon-btn sousuo" lay-filter="formSubSearchUser" lay-submit>
+                            <i class="layui-icon">&#xe615;</i>搜索
+                        </button>
+								<!--<button id="btnAddUser" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>-->
+							</div>
+						</div>
+					</div>
+
+					<table class="layui-table" id="tableUser" lay-filter="tableUser"></table>
+				</div>
+			</div>
+		</div>
+
+		<!-- 表格操作列 -->
+		<script type="text/html" id="tableBarUser">
+			<a ew-href="" class="layui-btn layui-btn-primary layui-btn-xs" ew-title="基本信息详情" lay-event="edit">查看</ a>
+				<!--<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">查看</a>-->
+		</script>
+
+		<!-- js部分 -->
+		<script type="text/javascript" src="../../assets/libs/layui/layui.js"></script>
+		<script type="text/javascript" src="../../assets/js/common.js?v=313"></script>
+		<script>
+			layui.use(['layer', 'form', 'table', 'util', 'admin'], function() {
+				var $ = layui.jquery;
+				var layer = layui.layer;
+				var form = layui.form;
+				var table = layui.table;
+				var util = layui.util;
+				var admin = layui.admin;
+
+				// 渲染表格
+				var insTb = table.render({
+					elem: '#tableUser',
+					url: ip + 'search1',
+					where: {
+						kind:1,
+						username: phone,
+					},
+					method: "post",
+					limit: 10,
+					page: true,
+					//          toolbar: true,
+					cellMinWidth: 100,
+					request: {
+						pageName: 'page' //页码的参数名称，默认：page
+							,
+						limitName: 'pagesize' //每页数据量的参数名，默认：limit
+					},
+					response: {
+						countName: 'total', //规定数据总数的字段名称，默认：count
+						statusName: 'status' //规定数据状态的字段名称，默认：code
+							,
+						statusCode: 1 //规定成功的状态码，默认：0
+							,
+						msgName: 'info' //规定状态信息的字段名称，默认：msg
+					},
+					cols: [
+						[{
+								type: 'numbers',
+								title: '序号'
+							},
+							{
+								field: 'Address',
+								title: '房屋坐落'
+							},
+							{
+								field: 'Ownname',
+								title: '小区名称'
+							},
+							{
+								field: 'Searchcode',
+								title: '查询编号'
+							},
+							{
+								field: 'Searchuser',
+								title: '查询人'
+							},
+							{
+								field: 'Searchtime',
+								title: '查询日期'
+							},
+							{
+								align: 'center',
+								toolbar: '#tableBarUser',
+								title: '操作内容',
+								minWidth: 150
+							}
+						]
+					],
+					done: function(res, curr, count) { // 表格渲染完成之后的回调
+						console.log(res)
+						if(res.status == 5){
+							layer.msg("你当前不在服务时间，请在服务时间内操作！")
+						}
+						$("[data-field='Searchtime']").children().each(function() {
+							var time = $(this).text()
+							var time1 = time.replace('T',' ')
+							var time2 = time1.replace('Z','')
+							var time3 = time2.split('.')[0]
+							$(this).text(time3)
+						})
+					}
+				});
+
+				// 搜索
+				form.on('submit(formSubSearchUser)', function(data) {
+					insTb.reload({
+						where: data.field
+					}, 'data');
+				});
+
+				// 工具条点击事件
+				table.on('tool(tableUser)', function(obj) {
+					var data = obj.data;
+					var layEvent = obj.event;
+					if(layEvent === 'edit') { // 修改
+						console.log(data)
+						var time = data.Searchtime
+						var time1 = time.split('T')[0]
+						var searchcode = data.Searchcode;
+						$(this).attr('ew-href', 'page/system/xqbg.html?id='+data.Id+'&Userid='+data.Userid+'&searchcode='+data.Searchcode+'&Address='+data.Address+'&Searchuser='+data.Searchuser+'&Searchtime='+time1+'')
+					}
+				});
+
+			});
+		</script>
+
+	</body>
+
+</html>

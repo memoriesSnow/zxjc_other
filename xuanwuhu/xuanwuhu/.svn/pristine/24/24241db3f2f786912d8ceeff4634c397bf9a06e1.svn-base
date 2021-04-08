@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>我的消息</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		<link href="../css/message.css" rel="stylesheet" />
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/jquery-3.4.1.min.js"></script>
+		<script src="../js/common.js"></script>
+		<script src="../js/user.js"></script>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的消息</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-scroll-wrapper" id="Container" style="top: 44px;">
+				<div class="mui-scroll">
+					<!-- <div class="mui-content"> -->
+					<!--这里放置真实显示的DOM内容-->
+					<ul class="mui-table-view" id="hotlist">
+						<!-- <li class="mui-table-view-cell mui-media">
+							<div class="mui-slider-right mui-disabled">
+								<a class="mui-btn mui-btn-red">删除</a>
+							</div>
+							<div class="mui-slider-handle">
+								<a href="javascript:;">
+									<div class="mui-media-object mui-pull-left"></div>
+									<div class="mui-media-body">
+										<h4 class="mui-ellipsis">官方消息</h4>
+										<p class="mui-ellipsis">[紧急通知]</p>
+									</div>
+									<p class="time">今天 9:46</p>
+								</a>
+							</div>
+							<i></i>
+						</li> -->
+					</ul>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var pageindex = 1;
+		var pagesize = 8;
+		var flag = false;
+		var state = app.getState();
+		var userid = state.userid ? state.userid: 0;
+		var token = state.token ? state.token: 0;
+		// console.log(token); 
+		mui.init({
+			pullRefresh: {
+				container: "#Container", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+				down : {
+					style: 'circle',//必选，下拉刷新样式，目前支持原生5+ ‘circle’ 样式
+					height: '50px',//可选,默认50px.下拉刷新控件的高度,
+					offset: '50px', //可选 默认0px,下拉刷新控件的起始位置
+					callback :function(){
+						setTimeout(function() {
+							document.getElementById("hotlist").innerHTML = "";
+							getData(1, pagesize);
+							mui('#Container').pullRefresh().endPulldown();
+						}, 500);
+					} 
+				},
+				up : {
+					height: 50,//可选.默认50.触发上拉加载拖动距离
+					auto: true,//可选,默认false.自动上拉加载一次
+					contentrefresh : "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
+					contentnomore:'没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
+					callback: function(){
+						pageindex++;
+						getData(pageindex, pagesize);
+						this.endPullupToRefresh(flag);
+					}
+				}
+			}
+		});
+		
+		mui.plusReady(function () {
+		    getData(pageindex, pagesize);
+			
+			mui("#hotlist").on("tap","li",function(e){
+				e.preventDefault();
+				$(this).removeClass("on");
+				var listid = $(this).attr("id");
+				mui.openWindow({
+					url: "msgdetail.html",
+					id: "msgdetail",
+					extras: {
+						listid: listid,
+						token: token
+					}
+				}); 
+			});
+			
+			// 单个消息删除
+			var btnArray = ['确认', '取消'];
+			$('#hotlist').on('tap', '.mui-btn', function(e) {
+				var elem = this;
+				var li = elem.parentNode.parentNode;
+				var listid = $(this).attr("id");
+				
+				mui.confirm('确认删除该条记录？', btnArray, function(e) {
+					if (e.index == 0) {
+						mui.ajax(serverUrl +'FeedBack/MessDel',{
+							data:{
+								id: listid,
+								token: token
+							},
+							dataType:'json',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							timeout:10000,//超时时间设置为10秒；
+							success:function(data){
+								// console.log(JSON.stringify(data));
+								if (data.status == 1) {
+									mui.toast(data.info);
+									li.parentNode.removeChild(li);
+									plus.webview.currentWebview().opener().reload();
+								}else{
+									mui.toast(data.info);
+								}
+							},
+							error:function(xhr,type,errorThrown){
+								mui.toast("亲，您的网络环境不稳定，请稍后再试！");
+							}
+						});
+						
+					} else {
+						setTimeout(function() {
+							mui.swipeoutClose(li);
+						}, 0);
+					}
+				});
+			});
+			
+		});
+		
+		function getData(pageindex, pagesize) {
+			mui.ajax(serverUrl + 'FeedBack/Reply', {
+				data: {
+					id: userid, 
+					token: token,
+					pageindex: pageindex,
+					pagesize: pagesize
+				},
+				async: true,
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒
+				success: function(data) {
+					// console.log(JSON.stringify(data));
+					plus.nativeUI.closeWaiting();
+					if (data.status == 1) {
+						mui.toast(data.info);
+						var datas = data.data; 
+						if (datas.length <= 0) {
+							// mui.toast("没有数据");
+							flag = true;
+							return;
+						}
+						
+						for (var i = 0; i < datas.length; i++) {
+							var html = "";
+							var li = document.createElement('li');
+							li.id = datas[i].id;
+							
+							if(datas[i].sort==0){
+								li.className = "mui-table-view-cell mui-media on";
+							}else{
+								li.className = "mui-table-view-cell mui-media";
+							}
+							
+							html +=	'<div class="mui-slider-right mui-disabled">';
+							html +=	'<a id="'+datas[i].id+'" class="mui-btn mui-btn-red">删除</a></div>';
+							html +=	'<div class="mui-slider-handle"><a href="javascript:;">';
+							html +=	'<div class="mui-media-object mui-pull-left"></div>';
+							html +=	'<div class="mui-media-body"><h4 class="mui-ellipsis">' + datas[i].title;
+							html +=	'</h4><p class="mui-ellipsis">' + datas[i].text + '</p></div>';
+							html +=	'<p class="time">' + datas[i].date + '</p>';
+							html +=	'</a></div><i></i>';
+							
+							li.innerHTML = html;
+							document.getElementById("hotlist").appendChild(li);
+						}
+					}else{
+						mui.toast(data.info);
+						mui.openWindow('../login.html','login',{});
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					plus.nativeUI.closeWaiting();
+					mui.toast("亲，您的网络环境不稳定，请稍后再试！");
+				}
+			});
+		};
+		
+	</script>
+</html>

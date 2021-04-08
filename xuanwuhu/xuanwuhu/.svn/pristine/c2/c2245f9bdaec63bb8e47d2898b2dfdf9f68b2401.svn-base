@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>充值</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		<link href="../css/pay.css" rel="stylesheet" />
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/jquery-3.4.1.min.js"></script>
+		<script src="../js/common.js"></script>
+		<script src="../js/user.js"></script>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">充值</h1>
+		</header>
+		<div class="mui-content">
+			<div class="balance">
+				<img src="../images/balance.png" />
+				<p>我的余额：<span id="sale">0</span>元</p>
+			</div>
+			<div class="mui-input-row">
+				<label>充值金额</label>
+				<input id="number" type="number" class="mui-input-clear" placeholder="请输入充值金额">
+			</div>
+			<p class="tip">充值金额不低于100元</p>
+			<button id="balance" type="button" class="mui-btn mui-btn-blue mui-btn-block">立即充值</button>
+			
+			<div id="mask">
+				<div class="maskwrap">
+					<img src="" />
+				</div>
+				<p>提示：二维码有效期2小时</p>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		mui.init();
+		var state = app.getState();
+		var userid = state.userid ? state.userid: 0;
+		var token = state.token ? state.token: 0;
+		var number  = "", timer = "";
+		console.log(JSON.stringify(state));
+		var mask = mui.createMask(function () {
+		 	document.getElementById("mask").style.display = "none";
+		 	window.clearInterval(timer);
+		});
+		var ordercode = "", type = "充值";
+		
+		mui.plusReady(function() {
+			GetBalance();
+			document.getElementById("balance").addEventListener("tap",function(e){
+				e.preventDefault(); 
+				number = document.getElementById("number").value;
+				if(number<100){
+					mui.toast("充值金额不低于100元");
+				}else{
+					PayCode(type, number);
+				}
+			});
+			
+		});
+		// 获取余额
+		function GetBalance(){
+			mui.ajax(serverUrl+'mycenter/GetBalance', {
+				data: {
+					userid: userid,
+					token: token
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					// console.log(JSON.stringify(data));
+					if(data.status == 1) {
+						document.getElementById("sale").innerHTML = data.data;
+					} else {
+						mui.toast(data.info);
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					mui.toast("亲，您的网络环境不稳定，请稍后再试！");
+				}
+			});
+		};
+		
+		// 支付二维码
+		function PayCode(type, money){
+			mui.ajax(serverUrl +'Payment/PayCode', {
+				data: {
+					userid: userid,
+					type: type,
+					money: money
+				}, 
+				async: true, 
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒
+				success: function(data) {
+					// console.log(JSON.stringify(data));
+					if(data.status==1){
+						ordercode = data.ordercode;
+						$("#mask img").attr("src", data.imgbase);
+						mask.show();
+						document.getElementById("mask").style.display = "block";
+						timer = window.setInterval("SearchOrder()", 5000);
+					}else{
+						mui.toast(data.info); 
+					} 
+				},
+				error: function(xhr, type, errorThrown) {
+					mui.toast("亲，您的网络环境不稳定，请稍后再试！");
+				}
+			});
+		};
+		
+		// 支付状态
+		function SearchOrder(){
+			mui.ajax(serverUrl +'payment/SearchOrder', {
+				data: {
+					ordercode: ordercode,
+					token: token,
+					userid: userid
+				}, 
+				async: true,
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒
+				success: function(data) {
+					console.log(JSON.stringify(data));
+					if(data.status==1){
+						mui.toast(data.info);
+						window.clearInterval(timer);
+						mask.close(); 
+						document.getElementById("mask").style.display = "none";
+						GetBalance();
+						plus.webview.currentWebview().opener().reload();
+						mui.back();
+					}else if(data.status==2){
+						mui.toast(data.info);
+					}else{
+						mui.toast(data.info);
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					mui.toast("亲，您的网络环境不稳定，请稍后再试！");
+				}
+			});
+		};
+		
+	</script>
+</html>

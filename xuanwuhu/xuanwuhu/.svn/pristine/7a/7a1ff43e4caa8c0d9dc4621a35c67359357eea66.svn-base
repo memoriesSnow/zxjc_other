@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>车辆信息报告</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		<link href="../css/cardetail.css" rel="stylesheet" />
+		<link href="../css/detail.css" rel="stylesheet" />
+		<link href="../css/mui.picker.css" rel="stylesheet" />
+		<link href="../css/mui.poppicker.css" rel="stylesheet" />
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/jquery-3.4.1.min.js"></script>
+		<script src="../js/common.js"></script>
+		<script src="../js/user.js"></script>
+		<script src="../js/mui.picker.js"></script>
+		<script src="../js/mui.poppicker.js"></script>
+	</head>
+	<style>
+		.info h4{
+			font-size: .28rem;
+		}
+	</style>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">车辆信息报告</h1>
+		</header>
+		<div class="mui-content carbase">
+			<div class="baseinfowrap">
+				<div class="baseinfo carbase">
+					<div class="car">
+						<p class="fl">报告编号<span id="buscode">2020032110001</span></p>
+						<p class="fr">查询时间<span id="date">2020-03-21 12:24:31</span></p>
+					</div>
+					<h4 class="title">
+						<img src="../images/baseinfo.png" />
+						<span>查询信息</span>
+					</h4>
+					<div class="info people">
+						<ul class="mui-table-view mui-grid-view">
+							<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+								<a href="#">
+									<p class="tit">查询人姓名</p>
+									<h4 class="cont" id="name">姓名</h4>
+								</a>
+							</li>
+							<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+								<a href="#">
+									<p class="tit">查询人证件号</p>
+									<h4 class="cont" id="idcard">身份证号</h4>
+								</a>
+							</li>
+							<li class="mui-table-view-cell mui-media mui-col-xs-12 mui-col-sm-12">
+								<a href="#">
+									<p class="tit">车牌号</p>
+									<h4 class="cont" id="platenum">晋A3HD86</h4>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="echartinfo">
+				<h4 class="title">
+					<img src="../images/baseinfo.png" />
+					<span>登记信息</span>
+				</h4>
+				<div class="info commonmodel">
+					<ul class="mui-table-view mui-grid-view">
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">汽车状态</p>
+								<h4 class="cont" id="autostate">正常</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">使用性质</p>
+								<h4 class="cont" id="usenature">非营运</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">登记时间</p>
+								<h4 class="cont" id="regdate">2019-12-17</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">检验有效期止</p>
+								<h4 class="cont" id="validity">2021-12-31</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">强制报废时间</p>
+								<h4 class="cont" id="scrap">2099-12-31</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">售价(万元)</p>
+								<h4 class="cont" id="sellprice">25.58</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">发动机号</p>
+								<h4 class="cont" id="engineno">BE803180</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">颜色</p>
+								<h4 class="cont" id="colors">白</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">型号</p>
+								<h4 class="cont" id="version">TJ7133E5S</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">车辆识别码</p>
+								<h4 class="cont" id="identificationcode">LHGRC4821L8034049</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-12 mui-col-sm-12">
+							<a href="#">
+								<p class="tit">厂家名称</p>
+								<h4 class="cont" id="factory">天津一汽夏利</h4>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<h4 class="title">
+					<img src="../images/baseinfo.png" />
+					<span>车辆信息</span>
+				</h4>
+				<div class="info commonmodel">
+					<ul class="mui-table-view mui-grid-view">
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">品牌</p>
+								<h4 class="cont" id="brand">夏利</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">车系</p>
+								<h4 class="cont" id="carline">夏利</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">车型</p>
+								<h4 class="cont" id="arctic">夏利N7</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">销售名称</p>
+								<h4 class="cont" id="sellname">1.3手动 舒适型</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">车身形式</p>
+								<h4 class="cont" id="carbody">两厢</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">年款</p>
+								<h4 class="cont" id="finishedautomobile">2013款</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">排量</p>
+								<h4 class="cont" id="gasdisplacement">1.3L</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">变速箱描述</p>
+								<h4 class="cont" id="gearboxdescribe">手动变速器(MT)</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">变速器类型</p>
+								<h4 class="cont" id="gearboxtype">手动</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">发动机型号</p>
+								<h4 class="cont" id="enginetype">CA4GA1</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">档位数</p>
+								<h4 class="cont" id="numberofgears">5档</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">排放标准</p>
+								<h4 class="cont" id="emissionstandard">国4</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">上市年月</p>
+								<h4 class="cont" id="timetomarket">2013年3月上市</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">生产年份</p>
+								<h4 class="cont" id="productiveyear">2014年生产</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">车门车座</p>
+								<h4 class="cont" id="doorofthecarseat">五门5座</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">车辆级别类型</p>
+								<h4 class="cont" id="vehicleclasstype">小型车轿车</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">燃油标号类型</p>
+								<h4 class="cont" id="fuellabeltype">93#汽油</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">驱动方式</p>
+								<h4 class="cont" id="drivemode">前轮驱动</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">气缸数(个)</p>
+								<h4 class="cont" id="cylinders">4</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">最大功率(kw)</p>
+								<h4 class="cont" id="maximum">107</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">轴距(mm)</p>
+								<h4 class="cont" id="wheelbase">2900</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">前轮距(mm)</p>
+								<h4 class="cont" id="frontgauge">1559</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">后轮距(mm)</p>
+								<h4 class="cont" id="trackrear">1560</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">总重量(kg)</p>
+								<h4 class="cont" id="totalweight">2514</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">整备质量(kg)</p>
+								<h4 class="cont" id="equipquality">1871</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">长(mm)</p>
+								<h4 class="cont" id="length">4847</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">宽(mm)</p>
+								<h4 class="cont" id="width">1820</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+							<a href="#">
+								<p class="tit">高(mm)</p>
+								<h4 class="cont" id="height">1712</h4>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-12 mui-col-sm-12">
+							<a href="#">
+								<p class="tit">轴重</p>
+								<h4 class="cont" id="axleload">680</h4>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+			<div class="rule">
+				<h4>报告使用说明</h4>
+				<ol type="1">
+					<li>本报告是经用户认证授权同意后，我们才向合法存有个人信息的机构采集用户的个人信息并实时生成本报告。</li>
+					<li>未经认证授权用户本人允许，任何人不得复制、摘录、转载或发表本报告。</li>
+					<li>我们不保证本报告内容的及时性、准确性、完整性和合理性。本报告内容仅供参考，方便用户了解相关信息。由于本人或他人使用本报告而产生的任何后果或结果均与我们和数据合作方无关。</li>
+					<li>如果根据用户本人与其他机构或个人的约定，需要向这些机构或个人提供本报告，这是用户本人与这些机构或个人之间的事情，是否提供本报告是用户个人的权利或义务，与本机构无关，本机构无权过问也无需知晓。</li>
+					<li>如果用户本人将此报告提供给他人或向他人展示，我们善意提醒用户由于上述行为，用户的个人信息可能会被泄露，由此可能会给用户带来不利的后果或无法预知的危害，请注意保护个人信息。</li>
+					<li>如您还有其他问题需要反馈，可通过以下表单提交给我们。我们会尽快处理！</li>
+				</ol>
+			</div>
+			
+			<div class="form">
+				<h4>表单</h4>
+				<ul>
+					<li>
+						<h4><i></i>问题类型</h4>
+						<p id="quetype">请选择问题类型</p>
+					</li>
+					<li>
+						<h4><i></i>问题描述</h4>
+						<input id="Describe" type="text" placeholder="请输入问题描述" />
+					</li>
+				</ul>
+				<button id="feedback" type="button" class="mui-btn mui-btn-blue">提交表单</button>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		mui.init();
+		var state = app.getState();
+		// console.log(JSON.stringify(state));
+		var userid = state.userid ? state.userid: 0;
+		var token = state.token ? state.token: 0;
+		var datas = "", located = "";
+		
+		mui.plusReady(function () {
+			var self = plus.webview.currentWebview();
+			datas = self.datas;
+			// alert(JSON.stringify(datas)); 
+			document.getElementById("buscode").innerHTML = datas.buscode;
+			document.getElementById("date").innerHTML = datas.date;
+			
+			document.getElementById("name").innerHTML = datas.name;
+			document.getElementById("idcard").innerHTML = starReplace(datas.idcard, 6, 14);
+			document.getElementById("platenum").innerHTML = datas.platenum;
+			
+			document.getElementById("autostate").innerHTML = datas.autostate;
+			document.getElementById("usenature").innerHTML = datas.usenature;
+			document.getElementById("regdate").innerHTML = datas.regdate;
+			document.getElementById("validity").innerHTML = datas.validity;
+			document.getElementById("scrap").innerHTML = datas.scrap;
+			document.getElementById("sellprice").innerHTML = datas.sellprice;
+			document.getElementById("engineno").innerHTML = datas.engineno;
+			document.getElementById("colors").innerHTML = datas.colors;
+			document.getElementById("version").innerHTML = datas.version;
+			document.getElementById("identificationcode").innerHTML = datas.identificationcode;
+			document.getElementById("factory").innerHTML = datas.factory;
+			
+			document.getElementById("brand").innerHTML = datas.brand?datas.brand:"暂未收录";
+			document.getElementById("carline").innerHTML = datas.carline?datas.carline:"暂未收录";
+			document.getElementById("arctic").innerHTML = datas.arctic?datas.arctic:"暂未收录";
+			document.getElementById("sellname").innerHTML = datas.sellname?datas.sellname:"暂未收录";
+			document.getElementById("carbody").innerHTML = datas.carbody?datas.carbody:"暂未收录";
+			document.getElementById("finishedautomobile").innerHTML = datas.finishedautomobile?datas.finishedautomobile:"暂未收录";
+			document.getElementById("gasdisplacement").innerHTML = datas.gasdisplacement?datas.gasdisplacement:"暂未收录";
+			document.getElementById("gearboxdescribe").innerHTML = datas.gearboxdescribe?datas.gearboxdescribe:"暂未收录";
+			document.getElementById("gearboxtype").innerHTML = datas.gearboxtype?datas.gearboxtype:"暂未收录";
+			document.getElementById("enginetype").innerHTML = datas.enginetype?datas.enginetype:"暂未收录";
+			document.getElementById("numberofgears").innerHTML = datas.numberofgears?datas.numberofgears:"暂未收录";
+			document.getElementById("emissionstandard").innerHTML = datas.emissionstandard?datas.emissionstandard:"暂未收录";
+			document.getElementById("timetomarket").innerHTML = datas.timetomarket?datas.timetomarket:"暂未收录";
+			document.getElementById("productiveyear").innerHTML = datas.productiveyear?datas.productiveyear:"暂未收录";
+			document.getElementById("doorofthecarseat").innerHTML = datas.doorofthecarseat?datas.doorofthecarseat:"暂未收录";
+			document.getElementById("vehicleclasstype").innerHTML = datas.vehicleclasstype?datas.vehicleclasstype:"暂未收录";
+			document.getElementById("fuellabeltype").innerHTML = datas.fuellabeltype?datas.fuellabeltype:"暂未收录";
+			document.getElementById("drivemode").innerHTML = datas.drivemode?datas.drivemode:"暂未收录";
+			document.getElementById("cylinders").innerHTML = datas.cylinders?datas.cylinders:"暂未收录";
+			
+			document.getElementById("maximum").innerHTML = datas.maximum?datas.maximum:"暂未收录";
+			document.getElementById("wheelbase").innerHTML = datas.wheelbase?datas.wheelbase:"暂未收录";
+			document.getElementById("frontgauge").innerHTML = datas.frontgauge?datas.frontgauge:"暂未收录";
+			document.getElementById("trackrear").innerHTML = datas.trackrear?datas.trackrear:"暂未收录";
+			document.getElementById("totalweight").innerHTML = datas.totalweight?datas.totalweight:"暂未收录";
+			document.getElementById("equipquality").innerHTML = datas.equipquality?datas.equipquality:"暂未收录";
+			document.getElementById("length").innerHTML = datas.length?datas.length:"暂未收录";
+			document.getElementById("width").innerHTML = datas.width?datas.width:"暂未收录";
+			document.getElementById("height").innerHTML = datas.height?datas.height:"暂未收录";
+			document.getElementById("axleload").innerHTML = datas.axleload?datas.axleload:"暂未收录";
+		    
+			// 意见反馈表单提交
+			document.getElementById("feedback").addEventListener("tap", function(){
+				var type = document.getElementById("quetype");
+				var describe = document.getElementById("Describe");
+				
+				if(type.innerHTML == "请选择问题类型") {
+					mui.toast('请选择问题类型');
+					return;
+				}
+				if(!describe.value) {
+					mui.toast('请输入问题描述');
+					return;
+				}
+				
+				var backInfo = {
+					userid: userid,
+					name: datas.name,
+					code: datas.platenum,
+					type: type.innerHTML,
+					located: located,
+					describe: describe.value,
+					token: token
+				};
+				app.feedback(backInfo, function(err) {
+					if (err) {
+						mui.toast(err);
+						return; 
+					}
+					plus.webview.currentWebview().opener().reload();
+					mui.back();
+				});
+			});
+			var userPicker = new mui.PopPicker();
+			userPicker.setData([{
+				value: 'face',
+				text: '人房核验'
+			}, {
+				value: 'risk',
+				text: '网贷信息'
+			}, {
+				value: 'car',
+				text: '车辆信息'
+			}, {
+				value: 'other',
+				text: '其他'
+			}]);
+			document.querySelector("#quetype").addEventListener("tap",function(){
+				userPicker.show(function(items){
+					$("#quetype").html(items[0].text);
+				});
+			});
+			
+			
+		});
+	</script>
+</html>

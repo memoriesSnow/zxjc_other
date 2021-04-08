@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link href="./assets/images/peo.png" rel="icon">
+		<title>风险管理服务平台</title>
+		<link rel="stylesheet" href="../../assets/libs/layui/css/layui.css" />
+		<link rel="stylesheet" href="../../assets/module/admin.css?v=313" />
+		<link rel="stylesheet" type="text/css" href="../../assets/css/smzq_xq.css" />
+		<script src="../../assets/libs/jquery/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../assets/js/html2pdf.bundle.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../assets/libs/echarts/echarts.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../assets/libs/echarts/echartsTheme.js" type="text/javascript" charset="utf-8"></script>
+		<!--地图-->
+		<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=23759963d9dc1a56fc2acc6ce6adff24"></script>
+		<style type="text/css">
+			.heads {
+				background: url(../../assets/images/smzq_1.jpg) no-repeat left;
+				background-size: cover;
+				color: #fff;
+				font-size: 22px;
+				padding: 15px 30px;
+				border-radius: 8px;
+				overflow: hidden;
+			}
+			.heads span{
+				margin-left: 15px;
+				font-size: 16px;
+			}
+			.head_left{
+				margin-top: 15px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				font-size: 18px;
+			}
+			#shuiyin {
+				position: absolute;
+				width: calc(100% - 50px);
+				height: calc(100% - 50px);
+				overflow: hidden;
+			}
+			
+			.wat {
+				width: 100%;
+				z-index: 1000;
+				font-family: "微软雅黑";
+				color: rgba(0, 0, 0, 0.1);
+				font-size: 50px;
+				margin: 0 auto;
+			}
+			
+			.watword {
+				line-height: 50px;
+				text-align: center;
+				white-space: nowrap;
+				transform: rotate(-40deg);
+			}
+			
+			#Name {
+				font-size: 22px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 页面加载loading -->
+		<div class="page-loading">
+			<div class="ball-loader">
+				<span></span><span></span><span></span><span></span>
+			</div>
+		</div>
+		<!-- 正文开始 -->
+		<div class="layui-fluid">
+			<div class="layui-card">
+				<div class="layui-card-body table-tool-mini" id="particulars" style="padding: 25px;position: relative;">
+					<div id="shuiyin"></div>
+					<div class="heads">
+							<div id="Address" style="margin-left: 15px;">
+								
+							</div>
+							<div class="head_left">
+								<div><span id="Name"></span><span class="cens" id="Idcard"></span></div>
+								<div>查询编号<span id="Searchcode"></span></div>
+								<div>查询时间<span id="Searchtime"></span></div>
+								
+							</div>
+					</div>
+					<div class="yuan">
+						<div></div>报告详情</div>
+					<table border="" cellspacing="" cellpadding="">
+						<tr>
+							<td rowspan="2" class="cen title">权属信息</td>
+							<td class="cen">
+								房产证号
+							</td>
+							<td colspan="8">
+								<span class="cens" id="Propertycard"></span>
+							</td>
+						</tr>
+						<tr>
+							<td class="cen">
+								房屋权属
+							</td>
+							<td colspan="4">
+								<span class="cens" id="Propertystatus"></span>
+							</td>
+							<td class="cen">
+								权属类型
+							</td>
+							<td colspan="3">
+								<span class="cens" id="Ownertype"></span>
+							</td>
+						</tr>
+						<tr>
+							<td class="cen title">抵押明细</td>
+							<td colspan="9">
+								<ul class="dy" id="dymx">
+									<div class="xian"></div>
+									<!--<li><div class="dian"></div><span class="dysj">2019-06-01</span><span>招商银行抵押</span><span class="dysj">抵押金额</span></li>
+									<li><div class="dian"></div><span class="dysj">2019-06-01</span><span>招商银行抵押</span><span class="dysj">抵押金额</span></li>
+									<li><div class="dian"></div><span class="dysj">2019-06-01</span><span>招商银行抵押</span><span class="dysj">抵押金额</span></li>-->
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<td class="cen title">查封明细</td>
+							<td colspan="9">
+								<ul class="dy" id="dymc">
+									<div class="xian"></div>
+									<!--<li><div class="dian"></div><span class="dysj">2019-06-01</span><span>招商银行抵押</span></li>-->
+								</ul>
+							</td>
+							<!--<td class="cen">
+								权属类型
+							</td>
+							<td colspan="3">
+								<span class="cens"></span>
+							</td>-->
+						</tr>
+						<!--<tr>
+							
+							<td class="cen">
+								房屋坐落
+							</td>
+							<td colspan="8">
+								<span class="cens" id="Address"></span>
+							</td>
+						</tr>-->
+						<tr>
+							<td rowspan="3" class="cen title">
+								基本信息
+							</td>
+							<td class="cen">房屋残值</td>
+							<td colspan="4"><span class="cens" id="Scraprice"></span></td>
+							<td class="cen">房屋净值</td>
+							<td colspan="3"><span class="cens" id="Totalprice"></span></td>
+						</tr>
+						<tr>
+							<td class="cen">土地性质</td>
+							<td colspan="2"><span class="cens" id="Landnature"></span></td>
+							<td class="cen">用途</td>
+							<td colspan="2"><span class="cens" id="Landuse"></span></td>
+							<td class="cen">建成年代</td>
+							<td colspan="2"><span class="cens" id="Buildyear"></span></td>
+						</tr>
+						<tr>
+							<td class="cen">房屋性质</td>
+							<td colspan="2"><span class="cens" id="Housenature"></span></td>
+							<td class="cen">建筑面积</td>
+							<td colspan="2"><span class="cens" id="Buildarea"></span></td>
+							<td class="cen">房屋用途</td>
+							<td colspan="2"><span class="cens" id="Houseuse"></span></td>
+						</tr>
+						<tr class="maps">
+							<td rowspan="5" class="cen title">
+								周边配套
+							</td>
+							<td class="cen mapmodel">
+								学校
+							</td>
+							<td colspan="8">
+								<ul class="zbpt" id='school'></ul>
+							</td>
+						</tr>
+						<tr class="maps">
+							<td class="cen mapmodel">
+								银行
+							</td>
+							<td colspan="8">
+								<ul class="zbpt" id='banking'></ul>
+							</td>
+						</tr>
+						<tr class="maps">
+							<td class="cen mapmodel">
+								医院
+							</td>
+							<td colspan="8">
+								<ul class="zbpt" id="hospital"></ul>
+							</td>
+						</tr>
+						<tr class="maps">
+							<td class="cen mapmodel">
+								超市
+							</td>
+							<td colspan="8">
+								<ul class="zbpt" id="supermarket"></ul>
+							</td>
+						</tr>
+						<tr class="maps">
+							<td class="cen mapmodel">
+								商场
+							</td>
+							<td colspan="8">
+								<ul class="zbpt" id="mall"></ul>
+							</td>
+						</tr>
+						<!--<tr>
+							<td rowspan="6" class="cen title">
+								公积金信息
+							</td>
+							<td class="cen">
+								个人账户余额
+							</td>
+							<td colspan="2">
+								<span class="cens" id="Balance"></span>
+							</td>
+							<td class="cen">
+								个人缴存基数
+							</td>
+							<td colspan="2">
+								<span class="cens" id="Cardinality"></span>
+							</td>
+							<td class="cen">
+								个人月缴存额
+							</td>
+							<td colspan="2">
+								<span class="cens" id="Permonthpay"></span>
+							</td>
+						</tr>
+						<tr>
+							<td class="cen">
+								个人缴存比例
+							</td>
+							<td colspan="2">
+								<span class="cens" id="Perdepositeratio"></span>
+							</td>
+							<td class="cen">
+								单位月缴存额
+							</td>
+							<td colspan="2">
+								<span class="cens" id="Unitmonthpay"></span>
+							</td>
+							<td class="cen">
+								单位缴存比例
+							</td>
+							<td colspan="2">
+								<span class="cens" id="Unitdepositeratio"></span>
+							</td>
+						</tr>
+						<tr>
+							<td class="cen">
+								单位名称
+							</td>
+							<td colspan="3">
+								<span class="cens" id="Unitname"></span>
+							</td>
+							<td class="cen">
+								所属分理处
+							</td>
+							<td colspan="4">
+								<span class="cens" id="Subbranches"></span>
+							</td>
+						</tr>
+						<tr>
+							<td class="cen">
+								个人账号状态
+							</td>
+							<td colspan="2">
+								<span class="cens" id=""></span>
+							</td>
+							<td class="cen">
+								贷款状态
+							</td>
+							<td colspan="2">
+								<span class="cens" id="Loansstatus"></span>
+							</td>
+							<td class="cen">
+								担保状态
+							</td>
+							<td colspan="2">
+								<span class="cens" id="Assurestatus"></span>
+							</td>
+						</tr>
+						<tr>
+							<td class="cen">
+								冻结状态
+							</td>
+							<td colspan="2">
+								<span class="cens" id="Freezestatus"></span>
+							</td>
+							<td class="cen">
+								开户日期
+							</td>
+							<td colspan="2">
+								<span class="cens" id="Oppendate"></span>
+							</td>
+							<td class="cen">
+								起缴年月
+							</td>
+							<td colspan="2">
+								<span class="cens" id="Startpaydate"></span>
+							</td>
+						</tr>
+						<tr>
+							<td class="cen">
+								交至年月
+							</td>
+							<td colspan="8">
+								<span class="cens" id="Endpaydate"></span>
+							</td>
+						</tr>-->
+						<tr>
+							<td class="cen title">
+								小区平均成交价、成交量
+							</td>
+							<!--<td colspan="9">
+								<div class="echa_">
+									<div style="width: 450px; float: left;">
+										<div id="Cjl" style="height: 297px;"></div>
+										<div class="echa_type">
+											<span style="background: #10a1f6;"></span> 成交量
+										</div>
+									</div>
+									<div style="width: 450px; float: left;">
+										<div id="Cjj" style="height: 297px;"></div>
+										<div class="echa_type">
+											<span style="background: #3af259;"></span> 成交价
+										</div>
+									</div>
+								</div>
+							</td>-->
+							<td class="cen">
+								上月成交量
+							</td>
+							<td colspan="3">
+								<span class="cens" id="Volume"></span>
+							</td>
+							<td class="cen">
+								平均成交价
+							</td>
+							<td colspan="4">
+								<span class="cens" id="Strikeprice"></span>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<button type="button" onclick="xiazai()" class="xiaz">下载</button>
+		<!-- js部分 -->
+		<script type="text/javascript" src="../../assets/libs/layui/layui.js"></script>
+		<script type="text/javascript" src="../../assets/js/common.js?v=313"></script>
+		<script type="text/javascript">
+			var sid = decodeURI(Request.id);
+			var Hoseid = decodeURI(Request.Houseid);
+			var searchcode = decodeURI(Request.searchcode);
+			var Userid = decodeURI(Request.Userid);
+			var searchuser = decodeURI(Request.Searchuser); //查询人
+			var searchtime = decodeURI(Request.Searchtime); //查询时间
+			layui.use(['layer', 'form', 'table', 'util', 'admin', 'jquery'], function() {
+				var $ = layui.jquery;
+				var layer = layui.layer;
+				var form = layui.form;
+				var table = layui.table;
+				var util = layui.util;
+				var admin = layui.admin;
+				var $ = layui.jquery;
+				$.ajax({
+					type: "post",
+					url: ip + "lifecircle",
+					data: {
+						id: Request.id,
+						username: phone,
+						houseid: Hoseid,
+					},
+					success: function(res) {
+						console.log(res)
+						if(res.status == 1){
+							var data = res.data.record;
+							var data2 = res.data.pledge
+							var data3 = res.data.seal
+							if(data.Coordinate != "") {
+								// 地图配套解析
+								var len = $(".maps");
+								for(var j = 0; j < len.length; j++) {
+									keyword = len.eq(j).find(".mapmodel").text();
+									ul = len.eq(j).find(".zbpt").attr("id");
+									searchAround(keyword, 1, data.Coordinate, ul);
+								};
+							}
+							for(var i in data) {
+								if(data[i] == "") {
+									//								$("#"+i).html("暂无数据");
+								} else {
+									$("#" + i).html(data[i]);
+								}
+								if(i == "Propertycard"){
+									if(data[i] == "非本人产权无法查看"){
+										$("#Ownertype").html(data[i])
+									}
+								}
+								if(i == "Searchtime"){
+									if(data[i] != ""){
+										var time = data[i]
+										var time1 = time.replace('T',' ')
+										var time2 = time1.replace('Z','')
+										var time3 = time2.split('.')[0]
+										$("#Searchtime").html(time3)
+									}
+								}
+								if(i == "Idcard") {
+									if(data[i] != "") {
+										$("#Idcard").html(data[i].replace(/^(.{3})(?:\w+)(.{4})$/, "\$1********\$2"))
+									}
+								}
+	//							if(i == "Scraprice") {
+	//								if(data[i] != '') {
+	//									$("#Scraprice").html(data[i] / 10000 + "万元");
+	//								} else {
+	//									$("#Scraprice").html('')
+	//								}
+	//							}
+								if(i == "Totalprice") {
+									if(data[i] != '') {
+										var data_a = (data[i] / 10000).toFixed(2)
+										$("#Totalprice").html(data_a + "万元");
+									} else {
+										$("#Totalprice").html('')
+									}
+								}
+								if(i == "Buildyear") {
+									if(data[i] != '') {
+										$("#Buildyear").html(data[i] + "年");
+									} else {
+										$("#Buildyear").html('')
+									}
+								}
+								if(i == "Buildarea") {
+									if(data[i] != '') {
+										$("#Buildarea").html(data[i] + "㎡");
+									} else {
+										$("#Buildarea").html('')
+									}
+								}
+								if(i == "Strikeprice") {
+									if(data[i] != '') {
+										$("#Strikeprice").html(data[i] + "元/㎡");
+									} else {
+										$("#Strikeprice").html('')
+									}
+								}
+							}
+							var lis = data2.length
+							var dy_height = ((lis - 1) * 41).toString()
+							$('#dymx .xian').css('height', dy_height + 'px')
+							for(var k in data2) {
+								var time = data2[k].Perdate
+								var time3 = '';
+								if(time != ""){
+									time3 = time.split('~')[0]
+								}
+								$("#dymx").append('<li><div class="dian"></div><span class="dysj">' + time3 + '</span><span>'+data2[k].Morttype+'</span><span class="dysj"></span></li>')
+							}
+							var lis1 = data3.length
+							var dy_height1 = ((lis1 - 1) * 41).toString()
+							$('#dymc .xian').css('height', dy_height1 + 'px')
+							for(var f in data3) {
+								var time = data3[f].Limitdate
+								var time3 = '';
+								if(time != ""){
+									time3 = time.split('~')[0]
+								}
+								$("#dymc").append('<li><div class="dian"></div><span class="dysj">' + time3 + '</span><span>'+data3[f].Bustype+'</span><span class="dysj"></span></li>')
+							}
+						}else if(res.status == 5){
+							layer.msg("你当前不在服务时间，请在服务时间内操作！")
+						}
+						
+						
+					}
+				});
+
+//				var lis = $('#dymx li').length
+//				var dy_height = ((lis - 1) * 41).toString()
+//				$('#dymx .xian').css('height', dy_height + 'px')
+
+//				var myCharts = echarts.init(document.getElementById('Cjl'), myEchartsTheme);
+//				var options1 = {
+//					tooltip: {
+//						trigger: "axis",
+//						axisPointer: {
+//							type: "line",
+//							lineStyle: {
+//								color: "#fff",
+//							},
+//						},
+//					},
+//					grid: {
+//						left: "3%",
+//						right: "4%",
+//						bottom: "3%",
+//						top: "10%",
+//						containLabel: true,
+//					},
+//					xAxis: [{
+//						type: "category",
+//						boundaryGap: false,
+//						data: ["01", "02", "03", "04", "05", "06"],
+//						axisPointer: {
+//							type: "line",
+//						},
+//						axisLine: {
+//							lineStyle: {
+//								color: '#dddddd',
+//								width: 1, //这里是为了突出显示加上的  
+//							}
+//						},
+//						axisLabel: {
+//							textStyle: {
+//								color: '#8c8c8c'
+//							}
+//						},
+//						axisTick: {
+//							alignWithLabel: true,
+//							show: false,
+//						},
+//						splitLine: {
+//							show: false,
+//						},
+//					}, ],
+//					yAxis: [{
+//						type: "value",
+//						min: 7000,
+//						max: 12000,
+//						interval: 1000,
+//						splitLine: {
+//							show: false
+//						},
+//						splitArea: {
+//							show: false
+//						},
+//						axisLine: {
+//							show: false,
+//							lineStyle: {
+//								color: '#8c8c8c',
+//								width: 1, //这里是为了突出显示加上的  
+//							}
+//						},
+//						axisTick: {
+//							show: false,
+//						},
+//					}, ],
+//					series: [{
+//						type: "line",
+//						smooth: false,
+//						symbolSize: 6,
+//						lineStyle: {
+//							color: "#3f7bf5",
+//							width: 2,
+//							type: "solid",
+//						},
+//						itemStyle: {
+//							borderWidth: 2,
+//							borderColor: "#3f7bf5",
+//							color: "white",
+//						},
+//						areaStyle: {
+//							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+//									offset: 0,
+//									color: "#cfebff",
+//								},
+//								{
+//									offset: 1,
+//									color: "#f2f2f2",
+//								},
+//							]),
+//						},
+//						data: [8000, 8200, 8600, 8900, 9300, 9500],
+//					}, ],
+//				}
+//				myCharts.setOption(options1);
+//
+//				var myCharts2 = echarts.init(document.getElementById('Cjj'), myEchartsTheme);
+//				var options2 = {
+//					tooltip: {
+//						trigger: "axis",
+//						axisPointer: {
+//							type: "line",
+//							lineStyle: {
+//								color: "#fff",
+//							},
+//						},
+//					},
+//					grid: {
+//						left: "3%",
+//						right: "4%",
+//						bottom: "3%",
+//						top: "10%",
+//						containLabel: true,
+//					},
+//					xAxis: [{
+//						type: "category",
+//						boundaryGap: false,
+//						data: ["01", "02", "03", "04", "05", "06"],
+//						axisPointer: {
+//							type: "line",
+//						},
+//						axisLine: {
+//							lineStyle: {
+//								color: '#dddddd',
+//								width: 1, //这里是为了突出显示加上的  
+//							}
+//						},
+//						axisLabel: {
+//							textStyle: {
+//								color: '#8c8c8c'
+//							}
+//						},
+//						axisTick: {
+//							alignWithLabel: true,
+//							show: false,
+//						},
+//						splitLine: {
+//							show: false,
+//						},
+//					}, ],
+//					yAxis: [{
+//						type: "value",
+//						min: 50,
+//						max: 250,
+//						interval: 50,
+//						splitLine: {
+//							show: false
+//						},
+//						splitArea: {
+//							show: false
+//						},
+//						axisLine: {
+//							show: false,
+//							lineStyle: {
+//								color: '#8c8c8c',
+//								width: 1, //这里是为了突出显示加上的  
+//							}
+//						},
+//						axisTick: {
+//							show: false,
+//						},
+//					}, ],
+//					series: [{
+//						type: "line",
+//						smooth: false,
+//						symbolSize: 6,
+//						lineStyle: {
+//							color: "#3af259",
+//							width: 2,
+//							type: "solid",
+//						},
+//						itemStyle: {
+//							borderWidth: 2,
+//							borderColor: "#3af259",
+//							color: "white",
+//						},
+//						areaStyle: {
+//							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+//									offset: 0,
+//									color: "#d9fddf",
+//								},
+//								{
+//									offset: 1,
+//									color: "#f2f2f2",
+//								},
+//							]),
+//						},
+//						data: [120, 150, 150, 180, 190, 210],
+//					}, ],
+//				}
+//				myCharts2.setOption(options2);
+			})
+			//			下载
+			function xiazai() {
+				if(level == 1) {
+					$('td').css('padding','0')
+					$('.zbpt').css('padding','10px')
+					$('.zbpt li').css('padding','0')
+					$('.zbpt li span').css('color','#000')
+					$('.zbpt li span').css('background','none')
+					$('.yuan').css('display','none')
+					$('table').css('margin-top','10px')
+					addPDF();
+					setInterval(function() {
+						$('td').css('padding','20px 0')
+						$('.zbpt').css('padding','0 25px')
+						$('.zbpt li').css('padding','5px 0')
+						$('.zbpt li span').css('color','#fff')
+						$('.zbpt li span').css('background','#cfcfcf')
+						$('.yuan').css('display','block')
+						$('table').css('margin-top','0')
+					},50)
+				} else if(level == 2) {
+					$.ajax({
+						type: "post",
+						url: ip + "download",
+						data: {
+							username: phone,
+							id:sid
+						},
+						dataType: 'json',
+						success: function(res) {
+							console.log(res)
+							if(res.status == 1) {
+								$('td').css('padding','0')
+								$('.zbpt').css('padding','10px')
+								$('.zbpt li').css('padding','0')
+								$('.zbpt li span').css('color','#000')
+								$('.zbpt li span').css('background','none')
+								$('.yuan').css('display','none')
+								$('table').css('margin-top','10px')
+								addPDF();
+								setInterval(function() {
+									$('td').css('padding','20px 0')
+									$('.zbpt').css('padding','0 25px')
+									$('.zbpt li').css('padding','5px 0')
+									$('.zbpt li span').css('color','#fff')
+									$('.zbpt li span').css('background','#cfcfcf')
+									$('.yuan').css('display','block')
+									$('table').css('margin-top','0')
+								},50)
+							} else {
+								layer.confirm('是否请求下载？', function(index) {
+									layer.close(index);
+									$.ajax({
+										type: "post",
+										url: ip + "apply",
+										data: {
+											proposer: phone,
+											username: phone,
+											searchcode: searchcode,
+											userid: Userid,
+											id: sid
+										},
+										dataType: 'json',
+										success: function(re) {
+											layer.msg(re.message);
+										}
+									})
+								});
+							}
+						}
+					});
+				}
+
+			}
+//			水印
+			var heights = $("#shuiyin").height()
+			var textnode = phone + '\xa0' + searchtime +'\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + phone + '\xa0' + searchtime+ '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + phone + '\xa0' + searchtime
+			var gs = (heights / 400) + 5
+			for(var i = 0; i < gs; i++) { //循环添加页面的水印
+				var div1 = document.createElement("div");
+				//创建一个能够覆盖页面宽度且有一定高度的容器承载水印
+				div1.className = "wat"; //为容器元素添加类名，用来调试设计相应的样式
+				div1.style.height = "400px"; //先设置个高度再说
+				//这里写死，需要根据body测量结果并动态添加循环次数的孩子不要着急
+				var div2 = document.createElement("div"); //创建一个调试水印文字样式的子容器
+				div2.className = "watword"; //添加样式类
+				var textNode = document.createTextNode(textnode); //通过js方法给子容器写一句要水印的文字
+				div2.appendChild(textNode);
+				//文字节点添加进容器
+				div1.appendChild(div2);
+				//子容器添加到父类容器中  
+				document.getElementById("shuiyin").appendChild(div1);
+				//父容器再添加到body中
+			}
+			//			生成PDF
+			function addPDF() {
+				
+				// Get the element.
+				var element = document.getElementById('particulars');
+
+				// Generate the PDF.
+				html2pdf().from(element).set({
+					margin: 0,
+					filename: 'test.pdf',
+					html2canvas: {
+						scale: 2
+					},
+					jsPDF: {
+						orientation: 'portrait',
+						unit: 'in',
+						format: 'letter',
+						compressPDF: true
+					}
+				}).save();
+			}
+			//			周边配套
+			function searchAround(keywords, pageIndex, coordinate, ul) {
+				coordinateArr = coordinate.split(",");
+				ptObj = new AMap.LngLat(coordinateArr[0], coordinateArr[1]);
+				AMap.service(["AMap.PlaceSearch"], function() {
+					var searchObj = new AMap.PlaceSearch({
+						pageSize: 3,
+						pageIndex: pageIndex,
+						extensions: 'base'
+					});
+					searchObj.searchNearBy(keywords, ptObj, 3000, function(status, result) {
+						if(status == 'complete') {
+							var str = '';
+							for(var i = 0; i < result.poiList.pois.length; i++) {
+								var pos = result.poiList.pois[i];
+								str += '<li>' + pos.name + '<span class="juli">' + pos.distance + '米</span></li>'
+							}
+							document.getElementById(ul).innerHTML = str;
+						}
+						if(status == 'no_data') {
+							document.getElementById(ul).innerHTML = '';
+						}
+						if(status == 'error') {
+							console.log('获取位置信息失败!');
+						}
+					})
+				})
+			};
+		</script>
+	</body>
+
+</html>
